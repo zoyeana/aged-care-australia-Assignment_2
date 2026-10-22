@@ -1,0 +1,416 @@
+State,SA3Code,SA3Name,Latitude,Longitude,FacilitiesRepresented,SA3FacilityTotal,DotType,Source
+ACT,80101,Belconnen,-35.223481,149.019286,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+ACT,80105,North Canberra,-35.244616,149.122338,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+ACT,80106,South Canberra,-35.336853,149.133769,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+ACT,80107,Tuggeranong,-35.456364,149.088887,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+ACT,80108,Weston Creek,-35.347527,149.047824,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+ACT,80109,Woden Valley,-35.329624,149.08103,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10102,Queanbeyan,-35.356065,149.227728,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10103,Snowy Mountains,-36.242456,149.11957,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10104,South Coast,-36.675623,149.837984,5,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10104,South Coast,-35.713332,150.175191,8,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10105,Goulburn - Mulwaree,-34.443031,149.485261,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10106,Young - Yass,-34.323281,148.289962,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10201,Gosford,-33.498269,151.304252,6,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10201,Gosford,-33.384609,151.375503,9,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10202,Wyong,-33.338022,151.433388,7,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10202,Wyong,-33.257886,151.550257,13,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10301,Bathurst,-33.416851,149.572848,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10302,Lachlan Valley,-33.081734,147.152251,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10303,Lithgow - Mudgee,-32.365195,149.541724,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10304,Orange,-33.090534,148.867413,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10401,Clarence Valley,-29.672755,152.937153,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10402,Coffs Harbour,-30.455924,152.896432,3,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10402,Coffs Harbour,-30.116799,153.200946,9,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10501,Bourke - Cobar - Coonamble,-31.507053,145.825507,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10502,Broken Hill and Far West,-31.974301,141.462647,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10503,Dubbo,-32.24309,148.240135,11,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10503,Dubbo,-31.274086,149.286025,1,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10601,Lower Hunter,-32.547973,151.167546,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10602,Maitland,-32.700211,151.507794,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10603,Port Stephens,-32.760153,151.748666,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10604,Upper Hunter,-32.138726,150.35792,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10701,Dapto - Port Kembla,-34.48876,150.766412,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10703,Kiama - Shellharbour,-34.592478,150.77896,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10704,Wollongong,-34.439242,150.849664,10,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10704,Wollongong,-34.226181,150.982722,1,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10801,Great Lakes,-32.401251,151.96509,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10802,Kempsey - Nambucca,-31.05476,152.793145,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10804,Port Macquarie,-31.467887,152.734013,11,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10804,Port Macquarie,-31.646159,152.794174,3,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10805,Taree - Gloucester,-32.018648,151.961046,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10901,Albury,-36.072614,146.883555,10,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10901,Albury,-35.515559,147.031813,2,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10902,Lower Murray,-34.109119,141.915743,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,10903,Upper Murray exc. Albury,-35.090112,144.0362,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11001,Armidale,-30.640208,151.504345,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11002,Inverell - Tenterfield,-29.865055,150.576559,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11003,Moree - Narrabri,-30.225249,149.449593,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11004,Tamworth - Gunnedah,-30.982105,150.251582,3,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11004,Tamworth - Gunnedah,-31.063154,151.039599,8,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11101,Lake Macquarie - East,-32.998442,151.644475,11,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11101,Lake Macquarie - East,-33.105367,151.644736,1,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11102,Lake Macquarie - West,-33.076863,151.451976,4,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11102,Lake Macquarie - West,-32.909031,151.613843,8,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11103,Newcastle,-32.917053,151.656687,7,22,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11103,Newcastle,-32.907531,151.780656,10,22,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11103,Newcastle,-32.858977,151.703441,5,22,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11201,Richmond Valley - Coastal,-28.840536,153.436634,7,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11201,Richmond Valley - Coastal,-28.559015,153.490928,5,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11202,Richmond Valley - Hinterland,-28.625755,153.001548,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11203,Tweed Valley,-28.337196,153.367474,3,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11203,Tweed Valley,-28.175321,153.543894,11,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11301,Griffith - Murrumbidgee (West),-33.479433,145.538839,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11302,Tumut - Tumbarumba,-35.298063,148.219002,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11303,Wagga Wagga,-35.222334,146.719068,10,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11303,Wagga Wagga,-34.634226,148.015515,6,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11401,Shoalhaven,-35.432657,150.405932,3,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11401,Shoalhaven,-34.777204,150.693777,13,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11402,Southern Highlands,-34.655221,150.295247,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11501,Baulkham Hills,-33.720263,150.943776,7,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11501,Baulkham Hills,-33.73098,151.055961,9,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11502,Dural - Wisemans Ferry,-33.702463,151.013297,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11503,Hawkesbury,-33.55391,150.663001,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11504,Rouse Hill - McGraths Hill,-33.697652,150.961864,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11601,Blacktown,-33.760799,150.865714,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11602,Blacktown - North,-33.689533,150.816848,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11603,Mount Druitt,-33.781418,150.830122,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11701,Botany,-33.95322,151.19858,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11702,Marrickville - Sydenham - Petersham,-33.911062,151.147594,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11703,Sydney Inner City,-33.89349,151.207782,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11801,Eastern Suburbs - North,-33.88078,151.226405,9,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11801,Eastern Suburbs - North,-33.860169,151.281164,5,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11802,Eastern Suburbs - South,-33.911308,151.220358,11,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11802,Eastern Suburbs - South,-33.98092,151.244716,3,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11901,Bankstown,-33.910789,150.985194,8,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11901,Bankstown,-33.966569,151.040815,8,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11902,Canterbury,-33.922062,151.054623,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11902,Canterbury,-33.923642,151.135219,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11903,Hurstville,-33.961333,151.055329,11,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11903,Hurstville,-33.990246,151.114202,5,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11904,Kogarah - Rockdale,-33.954312,151.112181,13,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,11904,Kogarah - Rockdale,-33.989111,151.143517,6,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12001,Canada Bay,-33.826599,151.089229,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12002,Leichhardt,-33.883619,151.146136,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12003,Strathfield - Burwood - Ashfield,-33.872663,151.084893,3,21,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12003,Strathfield - Burwood - Ashfield,-33.908484,151.14372,4,21,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12003,Strathfield - Burwood - Ashfield,-33.879225,151.124509,14,21,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12101,Chatswood - Lane Cove,-33.818978,151.151571,4,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12101,Chatswood - Lane Cove,-33.811441,151.212735,9,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12102,Hornsby,-33.730372,151.083228,8,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12102,Hornsby,-33.682989,151.110388,3,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12103,Ku-ring-gai,-33.717855,151.114002,11,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12103,Ku-ring-gai,-33.780718,151.176694,6,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12104,North Sydney - Mosman,-33.840372,151.21463,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12201,Manly,-33.797226,151.25097,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12202,Pittwater,-33.663471,151.285939,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12203,Warringah,-33.763896,151.218943,12,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12203,Warringah,-33.67882,151.224561,3,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12301,Camden,-34.05666,150.674614,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12302,Campbelltown (NSW),-34.112051,150.786203,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12303,Wollondilly,-34.202068,150.552974,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12401,Blue Mountains,-33.712464,150.315547,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12403,Penrith,-33.754241,150.658296,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12403,Penrith,-33.759488,150.731439,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12404,Richmond - Windsor,-33.584651,150.703101,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12405,St Marys,-33.772293,150.769824,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12501,Auburn,-33.87293,151.023533,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12502,Carlingford,-33.794322,151.024886,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12503,Merrylands - Guildford,-33.815993,150.932551,6,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12503,Merrylands - Guildford,-33.883015,151.000167,6,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12504,Parramatta,-33.810056,150.94902,6,18,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12504,Parramatta,-33.821731,151.016119,12,18,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12601,Pennant Hills - Epping,-33.755603,151.068996,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12602,Ryde - Hunters Hill,-33.813976,151.08616,10,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12602,Ryde - Hunters Hill,-33.83943,151.165975,7,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12701,Bringelly - Green Valley,-33.99633,150.738042,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12702,Fairfield,-33.829203,150.791031,1,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12702,Fairfield,-33.870308,150.958881,12,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12703,Liverpool,-33.948971,150.859222,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12801,Cronulla - Miranda - Caringbah,-34.022973,151.090209,10,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12801,Cronulla - Miranda - Caringbah,-34.061635,151.155517,2,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12802,Sutherland - Menai - Heathcote,-34.122994,150.989769,3,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NSW,12802,Sutherland - Menai - Heathcote,-33.997401,151.027666,9,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NT,70101,Darwin City,-12.419741,130.838279,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NT,70102,Darwin Suburbs,-12.398355,130.848376,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NT,70104,Palmerston,-12.478691,130.990666,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NT,70201,Alice Springs,-23.671296,133.871543,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+NT,70205,Katherine,-14.47602,132.254055,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30101,Capalaba,-27.518691,153.201193,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30102,Cleveland - Stradbroke,-27.541406,153.250157,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30103,Wynnum - Manly,-27.443718,153.149008,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30201,Bald Hills - Everton Park,-27.330732,153.009836,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30202,Chermside,-27.361108,153.007879,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30203,Nundah,-27.404553,153.06224,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30204,Sandgate,-27.342341,153.043719,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30301,Carindale,-27.492282,153.083988,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30302,Holland Park - Yeronga,-27.510903,153.015709,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30303,Mt Gravatt,-27.550482,153.0842,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30304,Nathan,-27.555789,153.036493,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30305,Rocklea - Acacia Ridge,-27.55645,153.013407,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30306,Sunnybank,-27.597416,153.041606,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30401,Centenary,-27.543314,152.940087,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30402,Kenmore - Brookfield - Moggill,-27.483728,152.909362,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30403,Sherwood - Indooroopilly,-27.508604,152.971249,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30404,The Gap - Enoggera,-27.401218,152.931394,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30501,Brisbane Inner,-27.482248,153.015862,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30502,Brisbane Inner - East,-27.476994,153.072257,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30503,Brisbane Inner - North,-27.442034,153.003967,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30504,Brisbane Inner - West,-27.484383,152.977548,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30601,Cairns - North,-16.779877,145.67904,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30602,Cairns - South,-16.906503,145.728521,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30603,Innisfail - Cassowary Coast,-16.959992,145.887088,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30604,Port Douglas - Daintree,-16.465581,145.365365,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30605,Tablelands (East) - Kuranda,-16.985043,145.423897,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30701,Darling Downs (West) - Maranoa,-28.051319,148.568873,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30702,Darling Downs - East,-26.784562,151.115079,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30703,Granite Belt,-27.930791,151.908004,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30801,Central Highlands (Qld),-23.517098,148.166846,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30803,Rockhampton,-23.445578,150.459195,9,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30803,Rockhampton,-23.13965,150.729342,3,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30804,Biloela,-25.638443,149.802684,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30805,Gladstone,-23.877579,151.238346,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30901,Broadbeach - Burleigh,-28.098027,153.423014,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30902,Coolangatta,-28.152687,153.460417,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30903,Gold Coast - North,-27.927034,153.380353,7,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30903,Gold Coast - North,-27.950498,153.405896,5,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30904,Gold Coast Hinterland,-27.929944,153.185222,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30905,Mudgeeraba - Tallebudgera,-28.076541,153.35241,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30906,Nerang,-27.988237,153.315998,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30907,Ormeau - Oxenford,-27.79699,153.27299,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30908,Robina,-28.052666,153.370551,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30909,Southport,-27.946598,153.366356,1,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30909,Southport,-27.976368,153.41582,10,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,30910,Surfers Paradise,-28.005353,153.393401,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31001,Forest Lake - Oxley,-27.609977,152.953966,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31002,Ipswich Hinterland,-27.081428,152.375168,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31003,Ipswich Inner,-27.594449,152.736461,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31101,Beaudesert,-27.969723,152.994557,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31102,Beenleigh,-27.699147,153.173244,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31103,Browns Plains,-27.685334,153.009992,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31104,Jimboomba,-27.83595,153.03376,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31105,Loganlea - Carbrook,-27.69175,153.148596,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31106,Springwood - Kingston,-27.629562,153.094167,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31201,Bowen Basin - North,-19.990707,148.239016,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31202,Mackay,-21.159322,148.872828,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31203,Whitsunday,-20.403741,148.57349,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31301,Bribie - Beachmere,-27.111186,153.064129,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31302,Caboolture,-27.024848,152.879034,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31303,Caboolture Hinterland,-26.938094,152.564923,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31304,Narangba - Burpengary,-27.186529,152.941414,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31305,Redcliffe,-27.208589,153.038042,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31401,The Hills District,-27.386896,152.932454,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31402,North Lakes,-27.251709,152.980293,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31403,Strathpine,-27.282369,152.95652,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31501,Far North,-10.569817,142.225316,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31502,Outback - North,-20.73407,139.504053,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31503,Outback - South,-23.433995,144.258091,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31601,Buderim,-26.688938,153.045173,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31602,Caloundra,-26.774401,153.082065,13,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31602,Caloundra,-26.713482,153.128912,3,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31603,Maroochy,-26.658176,153.052015,8,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31603,Maroochy,-26.519081,153.08355,3,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31605,Noosa,-26.398327,153.010844,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31606,Sunshine Coast Hinterland,-26.766242,152.862326,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31607,Nambour,-26.633698,152.941124,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31608,Noosa Hinterland,-26.421558,152.914894,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31701,Toowoomba,-27.561698,151.90613,16,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31701,Toowoomba,-27.566172,152.281894,1,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31801,Charters Towers - Ayr - Ingham,-18.627379,146.07868,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31802,Townsville,-19.25256,146.698086,6,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31802,Townsville,-19.307133,146.808477,6,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31901,Bundaberg,-25.239553,152.268923,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31902,Burnett,-24.866975,151.111538,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31903,Gympie - Cooloola,-26.203614,152.650309,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31904,Hervey Bay,-25.257856,152.808893,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+QLD,31905,Maryborough,-25.559257,152.669694,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40101,Adelaide City,-34.907954,138.587239,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40102,Adelaide Hills,-35.024948,138.720125,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40103,Burnside,-34.938124,138.641837,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40104,Campbelltown (SA),-34.877114,138.656899,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40105,Norwood - Payneham - St Peters,-34.90473,138.62899,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40106,Prospect - Walkerville,-34.888154,138.600948,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40107,Unley,-34.955848,138.575635,3,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40107,Unley,-34.963111,138.641151,10,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40201,Gawler - Two Wells,-34.622414,138.742402,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40202,Playford,-34.755805,138.657426,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40203,Port Adelaide - East,-34.857688,138.582523,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40204,Salisbury,-34.810437,138.610382,8,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40204,Salisbury,-34.742159,138.610665,6,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40205,Tea Tree Gully,-34.844506,138.694388,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40301,Holdfast Bay,-34.982601,138.513806,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40302,Marion,-34.995932,138.531026,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40303,Mitcham,-35.033662,138.584925,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40304,Onkaparinga,-35.27643,138.461932,4,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40304,Onkaparinga,-35.042638,138.569852,13,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40401,Charles Sturt,-34.856577,138.479053,9,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40401,Charles Sturt,-34.899621,138.576959,7,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40402,Port Adelaide - West,-34.833295,138.48279,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40403,West Torrens,-34.935948,138.508603,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40501,Barossa,-34.453839,138.813174,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40502,Lower North,-33.601818,137.932562,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40503,Mid North,-33.196811,138.000182,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40504,Yorke Peninsula,-34.060878,137.58951,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40601,Eyre Peninsula and South West,-34.714788,135.837391,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40602,Outback - North and East,-32.480233,137.755517,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40701,Fleurieu - Kangaroo Island,-35.455125,138.334748,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40702,Limestone Coast,-36.097373,140.345915,2,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40702,Limestone Coast,-37.857715,140.841814,9,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+SA,40703,Murray and Mallee,-35.12526,139.276351,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60101,Brighton,-42.760521,147.265004,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60102,Hobart - North East,-42.847282,147.357732,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60103,Hobart - North West,-42.781189,147.070003,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60104,Hobart - South and West,-43.066745,147.257688,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60105,Hobart Inner,-42.856151,147.29478,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60106,Sorell - Dodges Ferry,-42.785224,147.55667,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60201,Launceston,-41.36359,147.039797,4,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60201,Launceston,-41.486506,147.162311,9,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60202,Meander Valley - West Tamar,-41.524821,146.648471,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60203,North East,-41.078166,146.807318,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60301,Central Highlands (Tas.),-42.299775,147.36979,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60302,Huon - Bruny Island,-43.081674,147.016409,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60303,South East Coast,-42.127466,148.077049,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60401,Burnie - Ulverstone,-40.99103,145.73314,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60402,Devonport,-41.385639,146.323868,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+TAS,60403,West Coast,-39.931121,143.850978,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20101,Ballarat,-37.590424,143.808863,8,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20101,Ballarat,-37.559401,143.890074,9,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20102,Creswick - Daylesford - Ballan,-37.420637,143.891674,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20103,Maryborough - Pyrenees,-37.428427,143.37966,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20201,Bendigo,-36.783889,144.240238,5,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20201,Bendigo,-36.751856,144.305383,10,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20202,Heathcote - Castlemaine - Kyneton,-36.99269,144.064132,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20203,Loddon - Elmore,-36.11517,143.727195,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20301,Barwon - West,-38.243425,143.98494,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20302,Geelong,-38.190063,144.31545,20,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20302,Geelong,-38.026051,144.400776,3,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20302,Geelong,-38.195559,144.467471,4,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20303,Surf Coast - Bellarine Peninsula,-38.546373,143.979403,3,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20303,Surf Coast - Bellarine Peninsula,-38.119454,144.656131,8,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20401,Upper Goulburn Valley,-37.29517,144.945046,8,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20401,Upper Goulburn Valley,-37.057115,146.08569,6,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20402,Wangaratta - Benalla,-36.564335,145.973263,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20403,Wodonga - Alpine,-36.350066,146.690617,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20501,Baw Baw,-38.13869,145.853471,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20502,Gippsland - East,-37.837567,147.596028,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20503,Gippsland - South West,-38.459916,145.232001,6,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20503,Gippsland - South West,-38.659539,146.207921,8,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20504,Latrobe Valley,-38.17408,146.26964,4,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20504,Latrobe Valley,-38.205044,146.55039,8,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20505,Wellington,-38.556963,146.677712,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20601,Brunswick - Coburg,-37.735238,144.934514,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20602,Darebin - South,-37.754092,144.983262,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20603,Essendon,-37.755558,144.898468,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20604,Melbourne City,-37.789883,144.926735,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20605,Port Phillip,-37.837856,144.93252,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20606,Stonnington - West,-37.854294,144.9887,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20607,Yarra,-37.792541,144.990451,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20701,Boroondara,-37.805281,145.015639,10,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20701,Boroondara,-37.864373,145.085815,8,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20701,Boroondara,-37.805381,145.095122,9,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20702,Manningham - West,-37.758301,145.114193,12,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20702,Manningham - West,-37.799049,145.159765,4,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20703,Whitehorse - West,-37.853094,145.095371,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20801,Bayside,-37.929547,144.991906,11,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20801,Bayside,-37.951929,145.041669,5,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20802,Glen Eira,-37.885542,145.010051,11,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20802,Glen Eira,-37.923093,145.072995,8,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20803,Kingston,-37.976701,145.054613,12,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20803,Kingston,-38.054908,145.130392,4,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20804,Stonnington - East,-37.852116,145.034874,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20901,Banyule,-37.758251,145.044524,7,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20901,Banyule,-37.689009,145.132578,6,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20902,Darebin - North,-37.741354,144.992402,5,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20902,Darebin - North,-37.700969,145.05764,7,12,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20903,Nillumbik - Kinglake,-37.681083,145.122106,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20904,Whittlesea - Wallan,-37.665642,144.997797,13,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,20904,Whittlesea - Wallan,-37.509335,145.116203,2,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21001,Keilor,-37.744664,144.849696,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21002,Macedon Ranges,-37.48566,144.584305,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21003,Moreland - North,-37.703776,144.908572,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21003,Moreland - North,-37.714677,144.975608,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21004,Sunbury,-37.561868,144.716217,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21005,Tullamarine - Broadmeadows,-37.637223,144.880831,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21101,Knox,-37.865646,145.224791,15,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21101,Knox,-37.927025,145.275665,5,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21102,Manningham - East,-37.793446,145.176618,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21103,Maroondah,-37.832112,145.224176,10,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21103,Maroondah,-37.781434,145.286509,5,15,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21104,Whitehorse - East,-37.824659,145.167497,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21105,Yarra Ranges,-37.805676,145.309825,9,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21105,Yarra Ranges,-37.752301,145.702477,5,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21201,Cardinia,-38.058478,145.410564,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21202,Casey - North,-37.994594,145.233299,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21203,Casey - South,-38.045463,145.260435,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21204,Dandenong,-37.931212,145.106873,6,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21204,Dandenong,-37.990931,145.219926,13,19,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21205,Monash,-37.92435,145.086639,7,23,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21205,Monash,-37.877076,145.188153,11,23,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21205,Monash,-37.858128,145.09576,5,23,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21301,Brimbank,-37.701405,144.758399,6,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21301,Brimbank,-37.792124,144.827732,10,16,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21302,Hobsons Bay,-37.87089,144.763622,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21303,Maribyrnong,-37.777977,144.876136,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21304,Melton - Bacchus Marsh,-37.687601,144.427817,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21305,Wyndham,-37.873775,144.607152,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21305,Wyndham,-37.863654,144.745374,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21401,Frankston,-38.149213,145.117533,8,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21401,Frankston,-38.090863,145.185863,6,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21402,Mornington Peninsula,-38.385268,144.812166,7,25,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21402,Mornington Peninsula,-38.263926,145.193553,14,25,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21402,Mornington Peninsula,-38.416372,145.050815,4,25,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21501,Grampians,-36.381477,141.245743,11,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21501,Grampians,-37.546341,142.745767,9,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21501,Grampians,-35.730939,142.36551,7,27,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21502,Mildura,-34.165293,142.055599,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21503,Murray River - Swan Hill,-34.582551,142.77438,5,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21503,Murray River - Swan Hill,-36.3708,142.977486,9,14,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21601,Campaspe,-36.365814,144.697936,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21602,Moira,-36.057236,145.197573,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21603,Shepparton,-36.438385,145.224315,2,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21603,Shepparton,-36.389146,145.426693,9,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21701,Glenelg - Southern Grampians,-37.590368,141.393166,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21703,Colac - Corangamite,-38.239376,142.902493,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+VIC,21704,Warrnambool,-38.383472,142.226088,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50101,Augusta - Margaret River - Busselton,-33.952027,115.070294,5,5,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50102,Bunbury,-33.350365,115.621807,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50103,Manjimup,-33.577589,115.815516,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50201,Mandurah,-32.632454,115.638591,10,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50201,Mandurah,-32.63911,115.87268,1,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50301,Cottesloe - Claremont,-32.009066,115.752601,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50301,Cottesloe - Claremont,-31.971549,115.807748,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50302,Perth City,-31.943094,115.812415,11,24,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50302,Perth City,-31.912628,115.877507,8,24,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50302,Perth City,-31.958513,115.8752,5,24,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50401,Bayswater - Bassendean,-31.93431,115.886383,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50401,Bayswater - Bassendean,-31.876627,115.926981,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50402,Mundaring,-31.90258,116.0432,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50403,Swan,-31.896428,115.961364,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50501,Joondalup,-31.718876,115.734844,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50502,Stirling,-31.893161,115.7631,11,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50502,Stirling,-31.869817,115.875456,9,20,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50503,Wanneroo,-31.544012,115.629683,5,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50503,Wanneroo,-31.82838,115.85157,6,11,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50601,Armadale,-32.118202,116.000347,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50602,Belmont - Victoria Park,-31.974786,115.914748,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50603,Canning,-32.045746,115.865431,3,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50603,Canning,-31.99992,115.896604,10,13,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50604,Gosnells,-32.07799,115.92897,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50605,Kalamunda,-31.934843,116.011424,6,6,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50606,Serpentine - Jarrahdale,-32.228302,116.002732,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50607,South Perth,-31.990423,115.857093,10,10,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50701,Cockburn,-32.102525,115.763687,9,9,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50702,Fremantle,-32.03377,115.75635,7,7,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50703,Kwinana,-32.248483,115.811244,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50704,Melville,-32.02927,115.78211,8,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50704,Melville,-32.054438,115.871049,9,17,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50705,Rockingham,-32.293036,115.708815,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50901,Albany,-33.82852,117.15319,8,8,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50902,Wheat Belt - North,-31.652504,116.665503,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,50903,Wheat Belt - South,-32.37048,117.003714,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51001,Kimberley,-17.969113,122.227314,4,4,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51002,East Pilbara,-20.413984,118.595845,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51003,West Pilbara,-20.776747,117.142989,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51101,Esperance,-33.855301,121.893261,1,1,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51103,Goldfields,-30.741174,121.475112,2,2,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
+WA,51104,Mid West,-28.78431,114.60801,3,3,Representative actual facility coordinate,AIHW GEN Aged Care Service List 30 June 2025
