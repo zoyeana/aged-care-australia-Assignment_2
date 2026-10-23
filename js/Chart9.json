@@ -1,9 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "autosize": {"type": "fit", "contains": "padding"},
-  "background": "#FFFFFF",
-  "padding": 5,
-  "height": 480,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "At What Age Is High-Level Home Care Most Common?",
     "subtitle": "The percentage of Home Care Package recipients receiving Level 4 support across age groups in Australia, 2025.",
@@ -15,408 +11,332 @@
     "offset": 12,
     "subtitlePadding": 4
   },
-  "style": "cell",
-  "data": [
-    {"name": "hover_store"},
+  "background": "#FFFFFF",
+  "width": "container",
+  "height": 480,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart08_home_care_packages_age_level_2025.csv"
+  },
+  "transform": [
     {
-      "name": "source_0",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart08_home_care_packages_age_level_2025.csv",
-      "format": {"type": "csv", "delimiter": ","},
-      "transform": [
+      "calculate": "datum.PackageLevel == 'LEVEL 4' ? datum.Recipients : 0",
+      "as": "L4Recipients"
+    },
+    {
+      "joinaggregate": [
         {
-          "type": "formula",
-          "expr": "datum.PackageLevel == 'LEVEL 4' ? datum.Recipients : 0",
-          "as": "L4Recipients"
+          "op": "sum",
+          "field": "L4Recipients",
+          "as": "NatL4"
         },
         {
-          "type": "joinaggregate",
-          "as": ["NatL4", "NatAll"],
-          "ops": ["sum", "sum"],
-          "fields": ["L4Recipients", "Recipients"]
-        },
-        {
-          "type": "formula",
-          "expr": "datum.NatL4 / datum.NatAll * 100",
-          "as": "NationalPct"
-        },
-        {"type": "filter", "expr": "datum.PackageLevel == 'LEVEL 4'"}
-      ]
-    },
-    {
-      "name": "data_0",
-      "source": "source_0",
-      "transform": [
-        {
-          "type": "aggregate",
-          "groupby": [],
-          "ops": ["max"],
-          "fields": ["NationalPct"],
-          "as": ["NationalPct"]
+          "op": "sum",
+          "field": "Recipients",
+          "as": "NatAll"
         }
       ]
     },
     {
-      "name": "data_1",
-      "source": "data_0",
-      "transform": [
-        {
-          "type": "formula",
-          "expr": "'All ages: ' + format(datum.NationalPct, '.1f') + '%'",
-          "as": "RefLabel"
-        },
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"NationalPct\"]) && isFinite(+datum[\"NationalPct\"])"
-        }
-      ]
+      "calculate": "datum.NatL4 / datum.NatAll * 100",
+      "as": "NationalPct"
     },
     {
-      "name": "data_2",
-      "source": "data_0",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"NationalPct\"]) && isFinite(+datum[\"NationalPct\"])"
-        }
-      ]
-    },
-    {
-      "name": "data_3",
-      "source": "source_0",
-      "transform": [{"type": "formula", "expr": "0", "as": "Zero"}]
-    },
-    {
-      "name": "data_4",
-      "source": "data_3",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"Zero\"]) && isFinite(+datum[\"Zero\"])"
-        }
-      ]
-    },
-    {
-      "name": "data_5",
-      "source": "source_0",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"PercentageWithinAgeGroup\"]) && isFinite(+datum[\"PercentageWithinAgeGroup\"])"
-        }
-      ]
-    },
-    {
-      "name": "data_6",
-      "source": "source_0",
-      "transform": [
-        {
-          "type": "formula",
-          "expr": "format(datum.PercentageWithinAgeGroup, '.1f') + '%'",
-          "as": "Label"
-        }
-      ]
-    },
-    {
-      "name": "data_7",
-      "source": "data_6",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"PercentageWithinAgeGroup\"]) && isFinite(+datum[\"PercentageWithinAgeGroup\"])"
-        }
-      ]
+      "filter": "datum.PackageLevel == 'LEVEL 4'"
     }
   ],
-  "signals": [
+  "layer": [
     {
-      "name": "width",
-      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-      "on": [
+      "transform": [
         {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "window:resize"
-        },
-        {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "container:resize"
+          "aggregate": [
+            {
+              "op": "max",
+              "field": "NationalPct",
+              "as": "NationalPct"
+            }
+          ]
         }
-      ]
-    },
-    {
-      "name": "unit",
-      "value": {},
-      "on": [
-        {"events": "pointermove", "update": "isTuple(group()) ? group() : unit"}
-      ]
-    },
-    {
-      "name": "hover",
-      "update": "vlSelectionResolve(\"hover_store\", \"union\", true, true)"
-    },
-    {
-      "name": "hover_tuple",
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "mouseover"}],
-          "update": "datum && item().mark.marktype !== 'group' && indexof(item().mark.role, 'legend') < 0 ? {unit: \"layer_3\", fields: hover_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"AgeGroup\"]]} : null",
-          "force": true
-        },
-        {"events": [{"source": "view", "type": "mouseout"}], "update": "null"}
-      ]
-    },
-    {
-      "name": "hover_tuple_fields",
-      "value": [{"type": "E", "field": "AgeGroup"}]
-    },
-    {
-      "name": "hover_toggle",
-      "value": false,
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "mouseover"}],
-          "update": "event.shiftKey"
-        },
-        {"events": [{"source": "view", "type": "mouseout"}], "update": "false"}
-      ]
-    },
-    {
-      "name": "hover_modify",
-      "on": [
-        {
-          "events": {"signal": "hover_tuple"},
-          "update": "modify(\"hover_store\", hover_toggle ? null : hover_tuple, hover_toggle ? null : true, hover_toggle ? hover_tuple : null)"
-        }
-      ]
-    }
-  ],
-  "marks": [
-    {
-      "name": "layer_0_marks",
-      "type": "rule",
-      "style": ["rule"],
-      "interactive": false,
-      "from": {"data": "data_2"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.7},
-          "stroke": {"value": "#142D4E"},
-          "strokeWidth": {"value": 1.2},
-          "strokeDash": {"value": [4, 4]},
-          "description": {
-            "signal": "\"NationalPct: \" + (format(datum[\"NationalPct\"], \"\"))"
-          },
-          "x": {"scale": "x", "field": "NationalPct"},
-          "y": {"value": 0},
-          "y2": {"field": {"group": "height"}}
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "#142D4E",
+        "strokeDash": [
+          4,
+          4
+        ],
+        "strokeWidth": 1.2,
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "NationalPct",
+          "type": "quantitative"
         }
       }
     },
     {
-      "name": "layer_1_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "data_1"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "top"},
-          "dx": {"value": 6},
-          "dy": {"value": 4},
-          "fontSize": {"value": 12},
-          "fontWeight": {"value": "bold"},
-          "fill": {"value": "#142D4E"},
-          "description": {
-            "signal": "\"NationalPct: \" + (format(datum[\"NationalPct\"], \"\")) + \"; RefLabel: \" + (isValid(datum[\"RefLabel\"]) ? isArray(datum[\"RefLabel\"]) ? join(datum[\"RefLabel\"], ' ') : datum[\"RefLabel\"] : \"\"+datum[\"RefLabel\"])"
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "max",
+              "field": "NationalPct",
+              "as": "NationalPct"
+            }
+          ]
+        },
+        {
+          "calculate": "'All ages: ' + format(datum.NationalPct, '.1f') + '%'",
+          "as": "RefLabel"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "dx": 6,
+        "dy": 4,
+        "color": "#142D4E",
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "NationalPct",
+          "type": "quantitative"
+        },
+        "y": {
+          "value": 0
+        },
+        "text": {
+          "field": "RefLabel",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
           },
-          "x": {"scale": "x", "field": "NationalPct"},
-          "y": {"value": 0},
-          "text": {
-            "signal": "isValid(datum[\"RefLabel\"]) ? datum[\"RefLabel\"] : \"\"+datum[\"RefLabel\"]"
+          "axis": {
+            "title": "Age group (years)",
+            "labelFontSize": 13,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false,
+            "labelPadding": 8,
+            "grid": false
+          }
+        },
+        "x": {
+          "field": "Zero",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "PercentageWithinAgeGroup"
+        },
+        "color": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": "#D55E00"
+          },
+          "value": "#F2C6A0"
+        },
+        "tooltip": [
+          {
+            "field": "AgeGroup",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Recipients",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Level 4 recipients"
+          },
+          {
+            "field": "AgeGroupTotal",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Total Home Care Package recipients in age group"
+          },
+          {
+            "field": "PercentageWithinAgeGroup",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Receiving Level 4 (%)"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "0",
+          "as": "Zero"
+        }
+      ]
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "on": "mouseover",
+            "clear": "mouseout",
+            "fields": [
+              "AgeGroup"
+            ]
           }
         }
-      }
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "rule",
-      "style": ["rule"],
-      "interactive": true,
-      "from": {"data": "data_4"},
-      "encode": {
-        "update": {
-          "strokeWidth": {"value": 2},
-          "stroke": [
-            {
-              "test": "length(data(\"hover_store\")) && vlSelectionTest(\"hover_store\", datum)",
-              "value": "#D55E00"
-            },
-            {"value": "#F2C6A0"}
-          ],
-          "tooltip": {
-            "signal": "{\"Age group\": isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], '\\n') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"], \"Level 4 recipients\": format(datum[\"Recipients\"], \",\"), \"Total Home Care Package recipients in age group\": format(datum[\"AgeGroupTotal\"], \",\"), \"Receiving Level 4 (%)\": format(datum[\"PercentageWithinAgeGroup\"], \".1f\")}"
-          },
-          "description": {
-            "signal": "\"Zero: \" + (format(datum[\"Zero\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; PercentageWithinAgeGroup: \" + (format(datum[\"PercentageWithinAgeGroup\"], \"\")) + \"; Age group: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Level 4 recipients: \" + (format(datum[\"Recipients\"], \",\")) + \"; Total Home Care Package recipients in age group: \" + (format(datum[\"AgeGroupTotal\"], \",\")) + \"; Receiving Level 4 (%): \" + (format(datum[\"PercentageWithinAgeGroup\"], \".1f\"))"
-          },
-          "x": {"scale": "x", "field": "Zero"},
-          "x2": {"scale": "x", "field": "PercentageWithinAgeGroup"},
-          "y": {"scale": "y", "field": "AgeGroup", "band": 0.5}
-        }
-      }
-    },
-    {
-      "name": "layer_3_marks",
-      "type": "symbol",
-      "style": ["circle"],
-      "interactive": true,
-      "from": {"data": "data_5"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 1},
-          "size": {"value": 80},
-          "cursor": {"value": "pointer"},
-          "fill": {"value": "#D55E00"},
-          "stroke": [
-            {
-              "test": "length(data(\"hover_store\")) && vlSelectionTest(\"hover_store\", datum)",
-              "value": "#142D4E"
-            },
-            {"value": "#FFFFFF"}
-          ],
-          "strokeWidth": [
-            {
-              "test": "length(data(\"hover_store\")) && vlSelectionTest(\"hover_store\", datum)",
-              "value": 2
-            },
-            {"value": 1}
-          ],
-          "tooltip": {
-            "signal": "{\"Age group\": isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], '\\n') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"], \"Level 4 recipients\": format(datum[\"Recipients\"], \",\"), \"Total Home Care Package recipients in age group\": format(datum[\"AgeGroupTotal\"], \",\"), \"Receiving Level 4 (%)\": format(datum[\"PercentageWithinAgeGroup\"], \".1f\")}"
-          },
-          "ariaRoleDescription": {"value": "circle"},
-          "description": {
-            "signal": "\"PercentageWithinAgeGroup: \" + (format(datum[\"PercentageWithinAgeGroup\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Age group: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Level 4 recipients: \" + (format(datum[\"Recipients\"], \",\")) + \"; Total Home Care Package recipients in age group: \" + (format(datum[\"AgeGroupTotal\"], \",\")) + \"; Receiving Level 4 (%): \" + (format(datum[\"PercentageWithinAgeGroup\"], \".1f\"))"
-          },
-          "x": {"scale": "x", "field": "PercentageWithinAgeGroup"},
-          "y": {"scale": "y", "field": "AgeGroup", "band": 0.5},
-          "shape": {"value": "circle"}
-        }
-      }
-    },
-    {
-      "name": "layer_4_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "data_7"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "dx": {"value": 12},
-          "fontSize": {"value": 12},
-          "fontWeight": {"value": 600},
-          "fill": {"value": "#142D4E"},
-          "description": {
-            "signal": "\"PercentageWithinAgeGroup: \" + (format(datum[\"PercentageWithinAgeGroup\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Label: \" + (isValid(datum[\"Label\"]) ? isArray(datum[\"Label\"]) ? join(datum[\"Label\"], ' ') : datum[\"Label\"] : \"\"+datum[\"Label\"])"
-          },
-          "x": {"scale": "x", "field": "PercentageWithinAgeGroup"},
-          "y": {"scale": "y", "field": "AgeGroup", "band": 0.5},
-          "text": {
-            "signal": "isValid(datum[\"Label\"]) ? datum[\"Label\"] : \"\"+datum[\"Label\"]"
-          },
-          "baseline": {"value": "middle"}
-        }
-      }
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "linear",
-      "domain": [0, 90],
-      "range": [0, {"signal": "width"}],
-      "nice": false,
-      "zero": true
-    },
-    {
-      "name": "y",
-      "type": "band",
-      "domain": {
-        "fields": [
-          {"data": "data_3", "field": "AgeGroup"},
-          {"data": "source_0", "field": "AgeGroup"},
-          {"data": "data_6", "field": "AgeGroup"}
-        ],
-        "sort": {
-          "op": "max",
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 80,
+        "opacity": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
+          }
+        },
+        "x": {
           "field": "PercentageWithinAgeGroup",
-          "order": "descending"
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              90
+            ],
+            "nice": false
+          },
+          "axis": {
+            "title": "Home Care Package recipients receiving Level 4 (% of the age group's recipients)",
+            "values": [
+              0,
+              20,
+              40,
+              60,
+              80
+            ],
+            "labelExpr": "datum.label + '%'",
+            "gridColor": "#E8EEF4",
+            "labelFontSize": 12,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false,
+            "titlePadding": 12
+          }
+        },
+        "color": {
+          "value": "#D55E00"
+        },
+        "stroke": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": "#142D4E"
+          },
+          "value": "#FFFFFF"
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": 2
+          },
+          "value": 1
+        },
+        "tooltip": [
+          {
+            "field": "AgeGroup",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Recipients",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Level 4 recipients"
+          },
+          {
+            "field": "AgeGroupTotal",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Total Home Care Package recipients in age group"
+          },
+          {
+            "field": "PercentageWithinAgeGroup",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Receiving Level 4 (%)"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "format(datum.PercentageWithinAgeGroup, '.1f') + '%'",
+          "as": "Label"
         }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "color": "#142D4E",
+        "fontSize": 12,
+        "fontWeight": 600
       },
-      "range": [0, {"signal": "height"}],
-      "paddingInner": 0,
-      "paddingOuter": 0
-    }
-  ],
-  "axes": [
-    {
-      "scale": "x",
-      "orient": "bottom",
-      "gridColor": "#E8EEF4",
-      "values": [0, 20, 40, 60, 80],
-      "gridScale": "y",
-      "grid": true,
-      "tickCount": {"signal": "ceil(width/40)"},
-      "domain": false,
-      "labels": false,
-      "aria": false,
-      "maxExtent": 0,
-      "minExtent": 0,
-      "ticks": false,
-      "zindex": 0
-    },
-    {
-      "scale": "x",
-      "orient": "bottom",
-      "grid": false,
-      "title": "Home Care Package recipients receiving Level 4 (% of the age group's recipients)",
-      "domain": false,
-      "labelFontSize": 12,
-      "ticks": false,
-      "titleFontSize": 12,
-      "titlePadding": 12,
-      "values": [0, 20, 40, 60, 80],
-      "labelFlush": true,
-      "labelOverlap": true,
-      "tickCount": {"signal": "ceil(width/40)"},
-      "encode": {
-        "labels": {"update": {"text": {"signal": "datum.label + '%'"}}}
-      },
-      "zindex": 0
-    },
-    {
-      "scale": "y",
-      "orient": "left",
-      "grid": false,
-      "title": "Age group (years)",
-      "domain": false,
-      "labelFontSize": 13,
-      "labelPadding": 8,
-      "ticks": false,
-      "titleFontSize": 12,
-      "zindex": 0
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "PercentageWithinAgeGroup",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Label",
+          "type": "nominal"
+        }
+      }
     }
   ],
   "config": {
-    "axis": {"labelColor": "#142D4E", "titleColor": "#142D4E"},
-    "style": {
-      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "cell": {"stroke": null},
-      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
+    "view": {
+      "stroke": null
+    },
+    "font": "Inter, Helvetica, Arial, sans-serif",
+    "axis": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E"
     }
   }
 }
