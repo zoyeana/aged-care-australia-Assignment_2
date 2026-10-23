@@ -1,213 +1,78 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "autosize": {"type": "fit-x", "contains": "padding"},
-  "background": "white",
-  "padding": 5,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
   "height": 520,
-  "style": "cell",
-  "data": [
-    {
-      "name": "source_0",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart02_australia_population_pyramid_1980_2025.csv",
-      "format": {"type": "csv", "delimiter": ","},
-      "transform": [
-        {
-          "type": "formula",
-          "expr": "parseInt(datum.AgeGroup)",
-          "as": "Age Start"
-        },
-        {
-          "type": "formula",
-          "expr": "datum.Sex == 'Male' ? -datum.Population : datum.Population",
-          "as": "Signed Population"
-        },
-        {
-          "type": "formula",
-          "expr": "datum['Age Start'] >= 65 ? datum.Population : 0",
-          "as": "Aged 65+ Population"
-        },
-        {
-          "type": "joinaggregate",
-          "as": ["Total Population", "Total Aged 65+"],
-          "ops": ["sum", "sum"],
-          "fields": ["Population", "Aged 65+ Population"],
-          "groupby": ["Year"]
-        },
-        {
-          "type": "formula",
-          "expr": "datum['Total Aged 65+'] / datum['Total Population'] * 100",
-          "as": "Pct 65+"
-        },
-        {
-          "type": "formula",
-          "expr": "datum.Population / datum['Total Population'] * 100",
-          "as": "Share of Population"
-        },
-        {"type": "filter", "expr": "datum.Year == Year_selected"},
-        {
-          "type": "formula",
-          "expr": "indexof([\"Male\",\"Female\"], datum['Sex'])",
-          "as": "_Sex_sort_index"
-        },
-        {
-          "type": "formula",
-          "expr": "datum[\"AgeGroup\"]===\"100+\" ? 0 : datum[\"AgeGroup\"]===\"95–99\" ? 1 : datum[\"AgeGroup\"]===\"90–94\" ? 2 : datum[\"AgeGroup\"]===\"85–89\" ? 3 : datum[\"AgeGroup\"]===\"80–84\" ? 4 : datum[\"AgeGroup\"]===\"75–79\" ? 5 : datum[\"AgeGroup\"]===\"70–74\" ? 6 : datum[\"AgeGroup\"]===\"65–69\" ? 7 : datum[\"AgeGroup\"]===\"60–64\" ? 8 : datum[\"AgeGroup\"]===\"55–59\" ? 9 : datum[\"AgeGroup\"]===\"50–54\" ? 10 : datum[\"AgeGroup\"]===\"45–49\" ? 11 : datum[\"AgeGroup\"]===\"40–44\" ? 12 : datum[\"AgeGroup\"]===\"35–39\" ? 13 : datum[\"AgeGroup\"]===\"30–34\" ? 14 : datum[\"AgeGroup\"]===\"25–29\" ? 15 : datum[\"AgeGroup\"]===\"20–24\" ? 16 : datum[\"AgeGroup\"]===\"15–19\" ? 17 : datum[\"AgeGroup\"]===\"10–14\" ? 18 : datum[\"AgeGroup\"]===\"5–9\" ? 19 : datum[\"AgeGroup\"]===\"0–4\" ? 20 : 21",
-          "as": "y_AgeGroup_sort_index"
-        }
-      ]
-    },
-    {
-      "name": "data_0",
-      "source": "source_0",
-      "transform": [
-        {
-          "type": "stack",
-          "groupby": ["AgeGroup"],
-          "field": "Signed Population",
-          "sort": {"field": ["_Sex_sort_index"], "order": ["ascending"]},
-          "as": ["Signed Population_start", "Signed Population_end"],
-          "offset": "zero"
-        },
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"Signed Population\"]) && isFinite(+datum[\"Signed Population\"])"
-        }
-      ]
-    }
-  ],
-  "signals": [
-    {
-      "name": "width",
-      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-      "on": [
-        {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "window:resize"
-        },
-        {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "container:resize"
-        }
-      ]
-    },
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart02_australia_population_pyramid_1980_2025.csv"
+  },
+  "params": [
     {
       "name": "Year_selected",
       "value": 2025,
-      "bind": {
-        "input": "range",
-        "min": 1980,
-        "max": 2025,
-        "step": 1,
-        "name": "Year: "
-      }
+      "bind": {"input": "range", "min": 1980, "max": 2025, "step": 1, "name": "Year: "}
     }
   ],
-  "marks": [
+  "transform": [
+    {"calculate": "parseInt(datum.AgeGroup)", "as": "Age Start"},
+    {"calculate": "datum.Sex == 'Male' ? -datum.Population : datum.Population", "as": "Signed Population"},
+    {"calculate": "datum['Age Start'] >= 65 ? datum.Population : 0", "as": "Aged 65+ Population"},
     {
-      "name": "layer_0_marks",
-      "type": "rect",
-      "style": ["bar"],
-      "from": {"data": "data_0"},
-      "encode": {
-        "update": {
-          "fill": {"scale": "color", "field": "Sex"},
-          "opacity": [
-            {"test": "datum['Age Start'] >= 65", "value": 1},
-            {"value": 0.55}
-          ],
-          "tooltip": {
-            "signal": "{\"Year\": format(datum[\"Year\"], \"d\"), \"Age group\": isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], '\\n') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"], \"Sex\": isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], '\\n') : datum[\"Sex\"] : \"\"+datum[\"Sex\"], \"Population\": format(datum[\"Population\"], \",\"), \"Share of all Australians (%)\": format(datum[\"Share of Population\"], \".1f\"), \"Aged 65+ that year (%)\": format(datum[\"Pct 65+\"], \".1f\")}"
-          },
-          "ariaRoleDescription": {"value": "bar"},
-          "description": {
-            "signal": "\"Signed Population: \" + (format(datum[\"Signed Population\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Sex: \" + (isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], ' ') : datum[\"Sex\"] : \"\"+datum[\"Sex\"]) + \"; Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Age group: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Population: \" + (format(datum[\"Population\"], \",\")) + \"; Share of all Australians (%): \" + (format(datum[\"Share of Population\"], \".1f\")) + \"; Aged 65+ that year (%): \" + (format(datum[\"Pct 65+\"], \".1f\"))"
-          },
-          "x": {"scale": "x", "field": "Signed Population_end"},
-          "x2": {"scale": "x", "field": "Signed Population_start"},
-          "y": {"scale": "y", "field": "AgeGroup", "band": 0.09999999999999998},
-          "height": {"signal": "max(0.25, 0.8 * bandwidth('y'))"}
-        }
-      }
-    }
+      "joinaggregate": [
+        {"op": "sum", "field": "Population", "as": "Total Population"},
+        {"op": "sum", "field": "Aged 65+ Population", "as": "Total Aged 65+"}
+      ],
+      "groupby": ["Year"]
+    },
+    {"calculate": "datum['Total Aged 65+'] / datum['Total Population'] * 100", "as": "Pct 65+"},
+    {"calculate": "datum.Population / datum['Total Population'] * 100", "as": "Share of Population"}
   ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "linear",
-      "domain": [-1100000, 1100000],
-      "range": [0, {"signal": "width"}],
-      "zero": true
-    },
-    {
-      "name": "y",
-      "type": "band",
-      "domain": {
-        "data": "source_0",
-        "field": "AgeGroup",
-        "sort": {"op": "min", "field": "y_AgeGroup_sort_index"}
-      },
-      "range": [0, {"signal": "height"}],
-      "paddingInner": 0.1,
-      "paddingOuter": 0.05
-    },
-    {
-      "name": "color",
+  "encoding": {
+    "y": {
+      "field": "AgeGroup",
       "type": "ordinal",
-      "domain": ["Male", "Female"],
-      "range": ["#0072B2", "#E69F00"]
-    }
-  ],
-  "axes": [
-    {
-      "scale": "x",
-      "orient": "bottom",
-      "grid": true,
-      "values": [-1000000, -500000, 0, 500000, 1000000],
-      "gridScale": "y",
-      "domain": false,
-      "labels": false,
-      "aria": false,
-      "maxExtent": 0,
-      "minExtent": 0,
-      "ticks": false,
-      "zindex": 0
+      "sort": ["100+", "95–99", "90–94", "85–89", "80–84", "75–79", "70–74", "65–69", "60–64", "55–59", "50–54", "45–49", "40–44", "35–39", "30–34", "25–29", "20–24", "15–19", "10–14", "5–9", "0–4"],
+      "axis": {"title": "Age group (years)", "labelFontSize": 12}
     },
-    {
-      "scale": "x",
-      "orient": "bottom",
-      "grid": false,
-      "title": "Number of people (millions)    ← Males | Females →",
-      "values": [-1000000, -500000, 0, 500000, 1000000],
-      "labelFlush": true,
-      "labelOverlap": true,
-      "encode": {
-        "labels": {
-          "update": {
-            "text": {"signal": "format(abs(datum.value) / 1000000, '.1f')"}
-          }
-        }
-      },
-      "zindex": 0
-    },
-    {
-      "scale": "y",
-      "orient": "left",
-      "grid": false,
-      "title": "Age group (years)",
-      "labelFontSize": 12,
-      "zindex": 0
+    "x": {
+      "field": "Signed Population",
+      "type": "quantitative",
+      "scale": {"domain": [-1100000, 1100000]},
+      "axis": {
+        "title": "Number of people (millions)    ← Males | Females →",
+        "values": [-1000000, -500000, 0, 500000, 1000000],
+        "labelExpr": "format(abs(datum.value) / 1000000, '.1f')",
+        "grid": true
+      }
     }
-  ],
-  "legends": [
+  },
+  "layer": [
     {
-      "orient": "top",
-      "symbolType": "square",
-      "fill": "color",
-      "direction": "horizontal",
-      "encode": {"symbols": {"update": {"opacity": {"value": 1}}}}
+      "transform": [{"filter": "datum.Year == Year_selected"}],
+      "mark": {"type": "bar", "height": {"band": 0.8}},
+      "encoding": {
+        "color": {
+          "field": "Sex",
+          "type": "nominal",
+          "scale": {"domain": ["Male", "Female"], "range": ["#0072B2", "#E69F00"]},
+          "legend": {"title": null, "orient": "top", "symbolType": "square"}
+        },
+        "opacity": {
+          "condition": {"test": "datum['Age Start'] >= 65", "value": 1},
+          "value": 0.55
+        },
+        "tooltip": [
+          {"field": "Year", "type": "quantitative", "format": "d"},
+          {"field": "AgeGroup", "type": "nominal", "title": "Age group"},
+          {"field": "Sex", "type": "nominal"},
+          {"field": "Population", "type": "quantitative", "format": ","},
+          {"field": "Share of Population", "type": "quantitative", "format": ".1f", "title": "Share of all Australians (%)"},
+          {"field": "Pct 65+", "type": "quantitative", "format": ".1f", "title": "Aged 65+ that year (%)"}
+        ]
+      }
     }
   ],
   "config": {
+    "view": {"stroke": null},
     "axis": {
       "labelColor": "#142D4E",
       "titleColor": "#142D4E",
@@ -215,7 +80,6 @@
       "titleFontSize": 13,
       "gridColor": "#E6EAF0"
     },
-    "legend": {"labelColor": "#142D4E", "labelFontSize": 13},
-    "style": {"cell": {"stroke": null}}
+    "legend": {"labelColor": "#142D4E", "labelFontSize": 13}
   }
 }
