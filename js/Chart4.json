@@ -1,15 +1,8 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "autosize": {"type": "fit-x", "contains": "padding"},
-  "background": "#FFFFFF",
-  "padding": 5,
-  "height": 540,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Where Is Aged Care Used Across Australia?",
-    "subtitle": [
-      "Circle area shows the combined Home, Residential and Flexible care recipients reported in each state or territory, 30 June 2025.",
-      "Counts add the three care types together, so they are not unique individuals. Larger circles do not mean higher demand per person."
-    ],
+    "subtitle": ["Circle area shows the combined Home, Residential and Flexible care recipients reported in each state or territory, 30 June 2025.", "Counts add the three care types together, so they are not unique individuals. Larger circles do not mean higher demand per person."],
     "anchor": "start",
     "fontSize": 22,
     "subtitleFontSize": 13,
@@ -17,224 +10,110 @@
     "subtitleColor": "#142D4E",
     "offset": 12
   },
-  "style": ["view", "cell"],
-  "data": [
+  "width": "container",
+  "height": 540,
+  "background": "#FFFFFF",
+  "projection": {"type": "mercator"},
+  "layer": [
     {
-      "name": "source_0",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
-      "format": {"type": "topojson", "feature": "australia_states"}
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
+        "format": {"type": "topojson", "feature": "australia_states"}
+      },
+      "mark": {"type": "geoshape", "fill": "#EAF4FF", "stroke": "#B8CADB", "strokeWidth": 1}
     },
-    {"name": "source_2", "values": [{"x": 0}], "format": {}},
     {
-      "name": "source_1",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart04_aged_care_proportional_symbol_map_2025.csv",
-      "format": {"type": "csv", "delimiter": ","},
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart04_aged_care_proportional_symbol_map_2025.csv"
+      },
       "transform": [
         {
-          "type": "aggregate",
-          "groupby": ["State", "StateCode", "Latitude", "Longitude"],
-          "ops": ["sum"],
-          "fields": ["Recipients"],
-          "as": ["Total Recipients"]
-        },
-        {
-          "type": "geojson",
-          "fields": ["Longitude", "Latitude"],
-          "signal": "layer_1_geojson_0"
-        },
-        {
-          "type": "geopoint",
-          "projection": "projection",
-          "fields": ["Longitude", "Latitude"],
-          "as": ["layer_1_x", "layer_1_y"]
-        },
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"Total Recipients\"]) && isFinite(+datum[\"Total Recipients\"])"
+          "aggregate": [{"op": "sum", "field": "Recipients", "as": "Total Recipients"}],
+          "groupby": ["State", "StateCode", "Latitude", "Longitude"]
         }
-      ]
-    }
-  ],
-  "projections": [
-    {
-      "name": "projection",
-      "size": {"signal": "[width, height]"},
-      "fit": {"signal": "[data('source_0'), layer_1_geojson_0]"},
-      "type": "mercator"
-    }
-  ],
-  "signals": [
-    {
-      "name": "width",
-      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-      "on": [
-        {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "window:resize"
-        },
-        {
-          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
-          "events": "container:resize"
-        }
-      ]
-    }
-  ],
-  "marks": [
-    {
-      "name": "layer_0_marks",
-      "type": "shape",
-      "style": ["geoshape"],
-      "from": {"data": "source_0"},
-      "encode": {
-        "update": {
-          "fill": {"value": "#EAF4FF"},
-          "stroke": {"value": "#B8CADB"},
-          "strokeWidth": {"value": 1},
-          "ariaRoleDescription": {"value": "geoshape"}
-        }
-      },
-      "transform": [{"type": "geoshape", "projection": "projection"}]
-    },
-    {
-      "name": "layer_1_marks",
-      "type": "symbol",
-      "style": ["circle"],
-      "sort": {
-        "field": ["datum[\"Total Recipients\"]"],
-        "order": ["descending"]
-      },
-      "from": {"data": "source_1"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.75},
-          "fill": {"value": "#0072B2"},
-          "stroke": {"value": "#FFFFFF"},
-          "strokeWidth": {"value": 2},
-          "tooltip": {
-            "signal": "{\"State\": isValid(datum[\"State\"]) ? isArray(datum[\"State\"]) ? join(datum[\"State\"], '\\n') : datum[\"State\"] : \"\"+datum[\"State\"], \"Combined care recipients\": format(datum[\"Total Recipients\"], \",\")}"
-          },
-          "ariaRoleDescription": {"value": "circle"},
-          "description": {
-            "signal": "\"Longitude: \" + (format(datum[\"Longitude\"], \"\")) + \"; Latitude: \" + (format(datum[\"Latitude\"], \"\")) + \"; Total Recipients: \" + (format(datum[\"Total Recipients\"], \",d\")) + \"; State: \" + (isValid(datum[\"State\"]) ? isArray(datum[\"State\"]) ? join(datum[\"State\"], ' ') : datum[\"State\"] : \"\"+datum[\"State\"]) + \"; Combined care recipients: \" + (format(datum[\"Total Recipients\"], \",\"))"
-          },
-          "x": {"field": "layer_1_x"},
-          "y": {"field": "layer_1_y"},
-          "size": {"scale": "size", "field": "Total Recipients"},
-          "shape": {"value": "circle"}
-        }
-      }
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "text",
-      "style": ["text"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "top"},
-          "text": {"value": ["New South Wales has the highest total:"]},
-          "fontSize": {"value": 13},
-          "fontWeight": {"value": "bold"},
-          "fill": {"value": "#142D4E"},
-          "x": {"value": 0},
-          "y": {"value": 405}
-        }
-      }
-    },
-    {
-      "name": "layer_3_marks",
-      "type": "text",
-      "style": ["text"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "top"},
-          "text": {
-            "value": [
-              "158,314 combined care recipients",
-              "(32% of the national total)"
-            ]
-          },
-          "fontSize": {"value": 13},
-          "lineHeight": {"value": 17},
-          "fill": {"value": "#142D4E"},
-          "x": {"value": 0},
-          "y": {"value": 427}
-        }
-      }
-    },
-    {
-      "name": "layer_4_marks",
-      "type": "text",
-      "style": ["text"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.85},
-          "align": {"value": "left"},
-          "baseline": {"value": "bottom"},
-          "text": {
-            "value": [
-              "Source: Australian Institute of Health and",
-              "Welfare (AIHW), GEN Aged Care Data,",
-              "30 June 2025. Boundaries: Natural Earth."
-            ]
-          },
-          "fontSize": {"value": 11},
-          "lineHeight": {"value": 14},
-          "fill": {"value": "#142D4E"},
-          "x": {"value": 0},
-          "y": {"value": 540}
-        }
-      }
-    }
-  ],
-  "scales": [
-    {
-      "name": "size",
-      "type": "linear",
-      "domain": [0, 160000],
-      "range": [0, 2600],
-      "zero": true
-    }
-  ],
-  "legends": [
-    {
-      "direction": "horizontal",
-      "format": ",d",
-      "labelColor": "#142D4E",
-      "labelFontSize": 11,
-      "orient": "top-left",
-      "symbolFillColor": "#FFFFFF",
-      "symbolStrokeColor": "#142D4E",
-      "symbolStrokeWidth": 1,
-      "title": "Combined recipients",
-      "titleColor": "#142D4E",
-      "titleFontSize": 12,
-      "values": [5000, 25000, 50000],
-      "size": "size",
-      "symbolType": "circle",
-      "encode": {
-        "symbols": {
-          "update": {
-            "fill": {"value": "#0072B2"},
-            "opacity": {"value": 0.75},
-            "stroke": {"value": "transparent"}
+      ],
+      "mark": {"type": "circle", "fill": "#0072B2", "opacity": 0.75, "stroke": "#FFFFFF", "strokeWidth": 2},
+      "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "Total Recipients",
+          "type": "quantitative",
+          "scale": {"domain": [0, 160000], "range": [0, 2600]},
+          "legend": {
+            "title": "Combined recipients",
+            "values": [5000, 25000, 50000],
+            "format": ",d",
+            "orient": "top-left",
+            "direction": "horizontal",
+            "symbolFillColor": "#FFFFFF",
+            "symbolStrokeColor": "#142D4E",
+            "symbolStrokeWidth": 1,
+            "titleColor": "#142D4E",
+            "labelColor": "#142D4E",
+            "titleFontSize": 12,
+            "labelFontSize": 11
           }
-        }
+        },
+        "order": {"field": "Total Recipients", "type": "quantitative", "sort": "descending"},
+        "tooltip": [
+          {"field": "State", "type": "nominal"},
+          {"field": "Total Recipients", "type": "quantitative", "format": ",", "title": "Combined care recipients"}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"x": 0}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#142D4E",
+        "text": ["New South Wales has the highest total:"]
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "y": {"value": 405}
+      }
+    },
+    {
+      "data": {"values": [{"x": 0}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 13,
+        "color": "#142D4E",
+        "lineHeight": 17,
+        "text": ["158,314 combined care recipients", "(32% of the national total)"]
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "y": {"value": 427}
+      }
+    },
+    {
+      "data": {"values": [{"x": 0}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "fontSize": 11,
+        "opacity": 0.85,
+        "color": "#142D4E",
+        "lineHeight": 14,
+        "text": ["Source: Australian Institute of Health and", "Welfare (AIHW), GEN Aged Care Data,", "30 June 2025. Boundaries: Natural Earth."]
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "y": {"value": 540}
       }
     }
   ],
   "config": {
-    "style": {
-      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "cell": {"stroke": null},
-      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
-    }
+    "view": {"stroke": null},
+    "font": "Inter, Helvetica, Arial, sans-serif"
   }
 }
