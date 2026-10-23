@@ -1,0 +1,336 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "background": "#FFFFFF",
+  "padding": 5,
+  "height": 520,
+  "title": {
+    "text": "Which Australian States Have the Oldest Populations?",
+    "subtitle": "Share of each state's and territory's residents aged 65 or older, June 2025",
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 14,
+    "color": "#142D4E",
+    "subtitleColor": "#142D4E",
+    "offset": 12
+  },
+  "style": ["view", "cell"],
+  "data": [
+    {
+      "name": "source_1",
+      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart03_states_aged65plus_2025.csv",
+      "format": {"type": "csv", "delimiter": ","}
+    },
+    {
+      "name": "source_2",
+      "values": [
+        {"State": "Western Australia", "lon": 121.5, "lat": -26},
+        {"State": "Northern Territory", "lon": 133.4, "lat": -19.5},
+        {"State": "South Australia", "lon": 135.5, "lat": -30},
+        {"State": "Queensland", "lon": 144.5, "lat": -22.5},
+        {"State": "New South Wales", "lon": 146.8, "lat": -32.2},
+        {"State": "Victoria", "lon": 144.2, "lat": -37},
+        {"State": "Tasmania", "lon": 150.6, "lat": -42.2},
+        {"State": "Australian Capital Territory", "lon": 152.4, "lat": -35.6}
+      ]
+    },
+    {
+      "name": "source_3",
+      "values": [{"lon1": 142.2, "lat1": -40.3, "lon2": 144.9, "lat2": -41.1}]
+    },
+    {"name": "source_4", "values": [{"lon": 141.8, "lat": -40.3}]},
+    {"name": "source_5", "values": [{"x": 0}]},
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
+      "format": {
+        "type": "topojson",
+        "feature": "australia_states",
+        "parse": {}
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum[\"properties\"] && datum[\"properties\"][\"name\"]",
+          "as": "properties.name"
+        },
+        {
+          "type": "lookup",
+          "from": "source_1",
+          "key": "State",
+          "fields": ["properties.name"],
+          "values": [
+            "StateCode",
+            "TotalPopulation",
+            "Population65Plus",
+            "Percentage65Plus"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.Percentage65Plus < 14 ? 'Under 14%' : datum.Percentage65Plus < 17 ? '14% to under 17%' : datum.Percentage65Plus < 19 ? '17% to under 19%' : datum.Percentage65Plus < 21 ? '19% to under 21%' : '21% or more'",
+          "as": "Share Group"
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_2",
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "source_1",
+          "key": "State",
+          "fields": ["State"],
+          "values": ["StateCode", "Percentage65Plus"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.StateCode + '  ' + format(datum.Percentage65Plus, '.1f') + '%'",
+          "as": "Label"
+        },
+        {
+          "type": "geojson",
+          "fields": ["lon", "lat"],
+          "signal": "layer_1_geojson_0"
+        },
+        {
+          "type": "geopoint",
+          "projection": "projection",
+          "fields": ["lon", "lat"],
+          "as": ["layer_1_x", "layer_1_y"]
+        }
+      ]
+    },
+    {
+      "name": "data_1",
+      "source": "source_3",
+      "transform": [
+        {
+          "type": "geojson",
+          "fields": ["lon1", "lat1"],
+          "signal": "layer_2_geojson_0"
+        },
+        {
+          "type": "geojson",
+          "fields": ["lon2", "lat2"],
+          "signal": "layer_2_geojson_1"
+        },
+        {
+          "type": "geopoint",
+          "projection": "projection",
+          "fields": ["lon1", "lat1"],
+          "as": ["layer_2_x", "layer_2_y"]
+        },
+        {
+          "type": "geopoint",
+          "projection": "projection",
+          "fields": ["lon2", "lat2"],
+          "as": ["layer_2_x2", "layer_2_y2"]
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "source_4",
+      "transform": [
+        {
+          "type": "geojson",
+          "fields": ["lon", "lat"],
+          "signal": "layer_3_geojson_0"
+        },
+        {
+          "type": "geopoint",
+          "projection": "projection",
+          "fields": ["lon", "lat"],
+          "as": ["layer_3_x", "layer_3_y"]
+        }
+      ]
+    }
+  ],
+  "projections": [
+    {
+      "name": "projection",
+      "size": {"signal": "[width, height]"},
+      "fit": {
+        "signal": "[data('source_0'), layer_1_geojson_0, layer_2_geojson_0, layer_2_geojson_1, layer_3_geojson_0]"
+      },
+      "type": "mercator"
+    }
+  ],
+  "signals": [
+    {
+      "name": "width",
+      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+      "on": [
+        {
+          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+          "events": "window:resize"
+        },
+        {
+          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+          "events": "container:resize"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "layer_0_marks",
+      "type": "shape",
+      "style": ["geoshape"],
+      "from": {"data": "source_0"},
+      "encode": {
+        "update": {
+          "stroke": {"value": "#FFFFFF"},
+          "strokeWidth": {"value": 1.5},
+          "fill": {"scale": "color", "field": "Share Group"},
+          "tooltip": {
+            "signal": "{\"State / territory\": isValid(datum[\"properties.name\"]) ? isArray(datum[\"properties.name\"]) ? join(datum[\"properties.name\"], '\\n') : datum[\"properties.name\"] : \"\"+datum[\"properties.name\"], \"Population aged 65+\": format(datum[\"Population65Plus\"], \",\"), \"Total population\": format(datum[\"TotalPopulation\"], \",\"), \"Aged 65+ (%)\": format(datum[\"Percentage65Plus\"], \".1f\")}"
+          },
+          "ariaRoleDescription": {"value": "geoshape"},
+          "description": {
+            "signal": "\"Share Group: \" + (isValid(datum[\"Share Group\"]) ? isArray(datum[\"Share Group\"]) ? join(datum[\"Share Group\"], ' ') : datum[\"Share Group\"] : \"\"+datum[\"Share Group\"]) + \"; State / territory: \" + (isValid(datum[\"properties.name\"]) ? isArray(datum[\"properties.name\"]) ? join(datum[\"properties.name\"], ' ') : datum[\"properties.name\"] : \"\"+datum[\"properties.name\"]) + \"; Population aged 65+: \" + (format(datum[\"Population65Plus\"], \",\")) + \"; Total population: \" + (format(datum[\"TotalPopulation\"], \",\")) + \"; Aged 65+ (%): \" + (format(datum[\"Percentage65Plus\"], \".1f\"))"
+          }
+        }
+      },
+      "transform": [{"type": "geoshape", "projection": "projection"}]
+    },
+    {
+      "name": "layer_1_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "data_0"},
+      "encode": {
+        "update": {
+          "fontSize": {"value": 12},
+          "fontWeight": {"value": "bold"},
+          "fill": [
+            {
+              "test": "datum.Percentage65Plus >= 19 && datum.State != 'Tasmania'",
+              "value": "#FFFFFF"
+            },
+            {"value": "#142D4E"}
+          ],
+          "description": {
+            "signal": "\"lon: \" + (format(datum[\"lon\"], \"\")) + \"; lat: \" + (format(datum[\"lat\"], \"\")) + \"; Label: \" + (isValid(datum[\"Label\"]) ? isArray(datum[\"Label\"]) ? join(datum[\"Label\"], ' ') : datum[\"Label\"] : \"\"+datum[\"Label\"])"
+          },
+          "x": {"field": "layer_1_x"},
+          "y": {"field": "layer_1_y"},
+          "text": {
+            "signal": "isValid(datum[\"Label\"]) ? datum[\"Label\"] : \"\"+datum[\"Label\"]"
+          },
+          "align": {"value": "center"},
+          "baseline": {"value": "middle"}
+        }
+      }
+    },
+    {
+      "name": "layer_2_marks",
+      "type": "rule",
+      "style": ["rule"],
+      "from": {"data": "data_1"},
+      "encode": {
+        "update": {
+          "stroke": {"value": "#142D4E"},
+          "strokeWidth": {"value": 1},
+          "description": {
+            "signal": "\"lon1: \" + (format(datum[\"lon1\"], \"\")) + \"; lon2: \" + (format(datum[\"lon2\"], \"\")) + \"; lat1: \" + (format(datum[\"lat1\"], \"\")) + \"; lat2: \" + (format(datum[\"lat2\"], \"\"))"
+          },
+          "x": {"field": "layer_2_x"},
+          "x2": {"field": "layer_2_x2"},
+          "y": {"field": "layer_2_y"},
+          "y2": {"field": "layer_2_y2"}
+        }
+      }
+    },
+    {
+      "name": "layer_3_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "data_2"},
+      "encode": {
+        "update": {
+          "align": {"value": "right"},
+          "baseline": {"value": "middle"},
+          "text": {
+            "value": ["More than 1 in 5 Tasmanians", "are aged 65 or older."]
+          },
+          "fontSize": {"value": 14},
+          "fontWeight": {"value": "bold"},
+          "lineHeight": {"value": 18},
+          "fill": {"value": "#142D4E"},
+          "description": {
+            "signal": "\"lon: \" + (format(datum[\"lon\"], \"\")) + \"; lat: \" + (format(datum[\"lat\"], \"\"))"
+          },
+          "x": {"field": "layer_3_x"},
+          "y": {"field": "layer_3_y"}
+        }
+      }
+    },
+    {
+      "name": "layer_4_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "source_5"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.85},
+          "align": {"value": "left"},
+          "baseline": {"value": "bottom"},
+          "text": {
+            "value": [
+              "Source: Australian Bureau of Statistics (ABS), National, state and territory population, June 2025.",
+              "Boundaries: Natural Earth."
+            ]
+          },
+          "fontSize": {"value": 11},
+          "lineHeight": {"value": 14},
+          "fill": {"value": "#142D4E"},
+          "x": {"value": 0},
+          "y": {"value": 520}
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Under 14%",
+        "14% to under 17%",
+        "17% to under 19%",
+        "19% to under 21%",
+        "21% or more"
+      ],
+      "range": ["#EAF4FF", "#BDDDF3", "#80BCE2", "#368DC2", "#07558C"],
+      "interpolate": "hcl"
+    }
+  ],
+  "legends": [
+    {
+      "labelColor": "#142D4E",
+      "labelFontSize": 12,
+      "orient": "top-left",
+      "symbolSize": 250,
+      "symbolStrokeColor": "#BDC8D6",
+      "symbolStrokeWidth": 0.5,
+      "symbolType": "square",
+      "title": "Residents aged 65+",
+      "titleColor": "#142D4E",
+      "titleFontSize": 13,
+      "fill": "color"
+    }
+  ],
+  "config": {
+    "style": {
+      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "cell": {"stroke": null},
+      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
+    }
+  }
+}

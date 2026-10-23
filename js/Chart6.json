@@ -1,0 +1,522 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "background": "#FFFFFF",
+  "padding": 5,
+  "title": {
+    "text": "Who Uses Each Type of Aged Care?",
+    "subtitle": [
+      "Age and sex of people using Home care (left of each panel) and Residential care (right), 30 June 2025.",
+      "Bars show each group's share of all recipients of that care type, so women outnumbering men shows up in the bar lengths."
+    ],
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 13,
+    "color": "#142D4E",
+    "subtitleColor": "#142D4E",
+    "offset": 12
+  },
+  "data": [
+    {
+      "name": "source_1",
+      "values": [
+        {"x": -10, "t": "◄ Home care"},
+        {"x": 10, "t": "Residential care ►"}
+      ],
+      "format": {}
+    },
+    {"name": "source_2", "values": [{"x": 0}]},
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart06_home_residential_butterfly_2025.csv",
+      "format": {"type": "csv", "delimiter": ","},
+      "transform": [
+        {
+          "type": "joinaggregate",
+          "as": ["Care Type Total"],
+          "ops": ["sum"],
+          "fields": ["Recipients"],
+          "groupby": ["CareType"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.Recipients / datum['Care Type Total'] * 100",
+          "as": "Share of Care Type"
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {"type": "filter", "expr": "datum.Sex == 'Male'"},
+        {
+          "type": "formula",
+          "expr": "datum.CareType == 'Home care' ? -datum['Share of Care Type'] : datum['Share of Care Type']",
+          "as": "Signed Share"
+        },
+        {
+          "type": "formula",
+          "expr": "indexof([\"Home care\",\"Residential care\"], datum['CareType'])",
+          "as": "_CareType_sort_index"
+        }
+      ]
+    },
+    {
+      "name": "data_1",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": ["AgeGroup"],
+          "field": "Signed Share",
+          "sort": {"field": ["_CareType_sort_index"], "order": ["ascending"]},
+          "as": ["Signed Share_start", "Signed Share_end"],
+          "offset": "zero"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Signed Share\"]) && isFinite(+datum[\"Signed Share\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "source_0",
+      "transform": [
+        {"type": "filter", "expr": "datum.Sex == 'Female'"},
+        {
+          "type": "formula",
+          "expr": "datum.CareType == 'Home care' ? -datum['Share of Care Type'] : datum['Share of Care Type']",
+          "as": "Signed Share"
+        },
+        {
+          "type": "formula",
+          "expr": "indexof([\"Home care\",\"Residential care\"], datum['CareType'])",
+          "as": "_CareType_sort_index"
+        }
+      ]
+    },
+    {
+      "name": "data_3",
+      "source": "data_2",
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": ["AgeGroup"],
+          "field": "Signed Share",
+          "sort": {"field": ["_CareType_sort_index"], "order": ["ascending"]},
+          "as": ["Signed Share_start", "Signed Share_end"],
+          "offset": "zero"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Signed Share\"]) && isFinite(+datum[\"Signed Share\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_4",
+      "source": "source_0",
+      "transform": [
+        {"type": "filter", "expr": "datum.AgeOrder >= 9"},
+        {
+          "type": "aggregate",
+          "groupby": ["CareType"],
+          "ops": ["sum"],
+          "fields": ["Share of Care Type"],
+          "as": ["Share 90+"]
+        },
+        {"type": "pivot", "field": "CareType", "value": "Share 90+"},
+        {
+          "type": "formula",
+          "expr": "'Aged 90 or older: ' + format(datum['Residential care'], '.1f') + '% of residential care recipients, compared with ' + format(datum['Home care'], '.1f') + '% of home care recipients.'",
+          "as": "Annotation"
+        }
+      ]
+    },
+    {
+      "name": "data_5",
+      "source": "source_1",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"x\"]) && isFinite(+datum[\"x\"])"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {"name": "concat_0_height", "value": 380},
+    {"name": "concat_0_childWidth", "value": 340},
+    {"name": "concat_1_width", "value": 720},
+    {"name": "concat_1_height", "value": 70}
+  ],
+  "layout": {"padding": 20, "columns": 1, "bounds": "full", "align": "each"},
+  "marks": [
+    {
+      "type": "group",
+      "name": "concat_0_group",
+      "layout": {"padding": 30, "bounds": "full", "align": "each"},
+      "marks": [
+        {
+          "type": "group",
+          "name": "concat_0_concat_0_group",
+          "title": {
+            "text": "Men",
+            "anchor": "middle",
+            "fontSize": 16,
+            "color": "#142D4E",
+            "offset": 28,
+            "frame": "group"
+          },
+          "style": "cell",
+          "encode": {
+            "update": {
+              "width": {"signal": "concat_0_childWidth"},
+              "height": {"signal": "concat_0_height"}
+            }
+          },
+          "marks": [
+            {
+              "name": "concat_0_concat_0_layer_0_marks",
+              "type": "rect",
+              "style": ["bar"],
+              "from": {"data": "data_1"},
+              "encode": {
+                "update": {
+                  "fill": {"scale": "color", "field": "CareType"},
+                  "tooltip": {
+                    "signal": "{\"Care type\": isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], '\\n') : datum[\"CareType\"] : \"\"+datum[\"CareType\"], \"Sex\": isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], '\\n') : datum[\"Sex\"] : \"\"+datum[\"Sex\"], \"Age group\": isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], '\\n') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"], \"Recipients\": format(datum[\"Recipients\"], \",\"), \"Share of all recipients of this care type (%)\": format(datum[\"Share of Care Type\"], \".1f\")}"
+                  },
+                  "ariaRoleDescription": {"value": "bar"},
+                  "description": {
+                    "signal": "\"Signed Share: \" + (format(datum[\"Signed Share\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; CareType: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Care type: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Sex: \" + (isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], ' ') : datum[\"Sex\"] : \"\"+datum[\"Sex\"]) + \"; Age group: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Recipients: \" + (format(datum[\"Recipients\"], \",\")) + \"; Share of all recipients of this care type (%): \" + (format(datum[\"Share of Care Type\"], \".1f\"))"
+                  },
+                  "x": {
+                    "scale": "concat_0_concat_0_x",
+                    "field": "Signed Share_end"
+                  },
+                  "x2": {
+                    "scale": "concat_0_concat_0_x",
+                    "field": "Signed Share_start"
+                  },
+                  "y": {
+                    "scale": "concat_0_concat_0_y",
+                    "field": "AgeGroup",
+                    "band": 0.09000000000000002
+                  },
+                  "height": {
+                    "signal": "max(0.25, 0.82 * bandwidth('concat_0_concat_0_y'))"
+                  }
+                }
+              }
+            },
+            {
+              "name": "concat_0_concat_0_layer_1_marks",
+              "type": "text",
+              "style": ["text"],
+              "from": {"data": "data_5"},
+              "encode": {
+                "update": {
+                  "baseline": {"value": "bottom"},
+                  "fontSize": {"value": 13},
+                  "fontWeight": {"value": "bold"},
+                  "fill": {"value": "#142D4E"},
+                  "description": {
+                    "signal": "\"x: \" + (format(datum[\"x\"], \"\")) + \"; t: \" + (isValid(datum[\"t\"]) ? isArray(datum[\"t\"]) ? join(datum[\"t\"], ' ') : datum[\"t\"] : \"\"+datum[\"t\"])"
+                  },
+                  "x": {"scale": "concat_0_concat_0_x", "field": "x"},
+                  "y": {"value": -6},
+                  "text": {
+                    "signal": "isValid(datum[\"t\"]) ? datum[\"t\"] : \"\"+datum[\"t\"]"
+                  },
+                  "align": {"value": "center"}
+                }
+              }
+            }
+          ],
+          "axes": [
+            {
+              "scale": "concat_0_concat_0_x",
+              "orient": "bottom",
+              "values": [-15, -10, -5, 0, 5, 10, 15],
+              "gridScale": "concat_0_concat_0_y",
+              "grid": true,
+              "tickCount": {"signal": "ceil(concat_0_childWidth/40)"},
+              "domain": false,
+              "labels": false,
+              "aria": false,
+              "maxExtent": 0,
+              "minExtent": 0,
+              "ticks": false,
+              "zindex": 0
+            },
+            {
+              "scale": "concat_0_concat_0_x",
+              "orient": "bottom",
+              "grid": false,
+              "title": "Share of all recipients of that care type (%)",
+              "values": [-15, -10, -5, 0, 5, 10, 15],
+              "labelFlush": true,
+              "labelOverlap": true,
+              "tickCount": {"signal": "ceil(concat_0_childWidth/40)"},
+              "encode": {
+                "labels": {
+                  "update": {
+                    "text": {"signal": "format(abs(datum.value), '.0f') + '%'"}
+                  }
+                }
+              },
+              "zindex": 0
+            },
+            {
+              "scale": "concat_0_concat_0_y",
+              "orient": "left",
+              "grid": false,
+              "title": "Age group (years)",
+              "zindex": 0
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "name": "concat_0_concat_1_group",
+          "title": {
+            "text": "Women",
+            "anchor": "middle",
+            "fontSize": 16,
+            "color": "#142D4E",
+            "offset": 28,
+            "frame": "group"
+          },
+          "style": "cell",
+          "encode": {
+            "update": {
+              "width": {"signal": "concat_0_childWidth"},
+              "height": {"signal": "concat_0_height"}
+            }
+          },
+          "marks": [
+            {
+              "name": "concat_0_concat_1_layer_0_marks",
+              "type": "rect",
+              "style": ["bar"],
+              "from": {"data": "data_3"},
+              "encode": {
+                "update": {
+                  "fill": {"scale": "color", "field": "CareType"},
+                  "tooltip": {
+                    "signal": "{\"Care type\": isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], '\\n') : datum[\"CareType\"] : \"\"+datum[\"CareType\"], \"Sex\": isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], '\\n') : datum[\"Sex\"] : \"\"+datum[\"Sex\"], \"Age group\": isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], '\\n') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"], \"Recipients\": format(datum[\"Recipients\"], \",\"), \"Share of all recipients of this care type (%)\": format(datum[\"Share of Care Type\"], \".1f\")}"
+                  },
+                  "ariaRoleDescription": {"value": "bar"},
+                  "description": {
+                    "signal": "\"Signed Share: \" + (format(datum[\"Signed Share\"], \"\")) + \"; AgeGroup: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; CareType: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Care type: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Sex: \" + (isValid(datum[\"Sex\"]) ? isArray(datum[\"Sex\"]) ? join(datum[\"Sex\"], ' ') : datum[\"Sex\"] : \"\"+datum[\"Sex\"]) + \"; Age group: \" + (isValid(datum[\"AgeGroup\"]) ? isArray(datum[\"AgeGroup\"]) ? join(datum[\"AgeGroup\"], ' ') : datum[\"AgeGroup\"] : \"\"+datum[\"AgeGroup\"]) + \"; Recipients: \" + (format(datum[\"Recipients\"], \",\")) + \"; Share of all recipients of this care type (%): \" + (format(datum[\"Share of Care Type\"], \".1f\"))"
+                  },
+                  "x": {
+                    "scale": "concat_0_concat_1_x",
+                    "field": "Signed Share_end"
+                  },
+                  "x2": {
+                    "scale": "concat_0_concat_1_x",
+                    "field": "Signed Share_start"
+                  },
+                  "y": {
+                    "scale": "concat_0_concat_1_y",
+                    "field": "AgeGroup",
+                    "band": 0.09000000000000002
+                  },
+                  "height": {
+                    "signal": "max(0.25, 0.82 * bandwidth('concat_0_concat_1_y'))"
+                  }
+                }
+              }
+            },
+            {
+              "name": "concat_0_concat_1_layer_1_marks",
+              "type": "text",
+              "style": ["text"],
+              "from": {"data": "data_5"},
+              "encode": {
+                "update": {
+                  "baseline": {"value": "bottom"},
+                  "fontSize": {"value": 13},
+                  "fontWeight": {"value": "bold"},
+                  "fill": {"value": "#142D4E"},
+                  "description": {
+                    "signal": "\"x: \" + (format(datum[\"x\"], \"\")) + \"; t: \" + (isValid(datum[\"t\"]) ? isArray(datum[\"t\"]) ? join(datum[\"t\"], ' ') : datum[\"t\"] : \"\"+datum[\"t\"])"
+                  },
+                  "x": {"scale": "concat_0_concat_1_x", "field": "x"},
+                  "y": {"value": -6},
+                  "text": {
+                    "signal": "isValid(datum[\"t\"]) ? datum[\"t\"] : \"\"+datum[\"t\"]"
+                  },
+                  "align": {"value": "center"}
+                }
+              }
+            }
+          ],
+          "axes": [
+            {
+              "scale": "concat_0_concat_1_x",
+              "orient": "bottom",
+              "values": [-15, -10, -5, 0, 5, 10, 15],
+              "gridScale": "concat_0_concat_1_y",
+              "grid": true,
+              "tickCount": {"signal": "ceil(concat_0_childWidth/40)"},
+              "domain": false,
+              "labels": false,
+              "aria": false,
+              "maxExtent": 0,
+              "minExtent": 0,
+              "ticks": false,
+              "zindex": 0
+            },
+            {
+              "scale": "concat_0_concat_1_x",
+              "orient": "bottom",
+              "grid": false,
+              "title": "Share of all recipients of that care type (%)",
+              "values": [-15, -10, -5, 0, 5, 10, 15],
+              "labelFlush": true,
+              "labelOverlap": true,
+              "tickCount": {"signal": "ceil(concat_0_childWidth/40)"},
+              "encode": {
+                "labels": {
+                  "update": {
+                    "text": {"signal": "format(abs(datum.value), '.0f') + '%'"}
+                  }
+                }
+              },
+              "zindex": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "concat_1_group",
+      "style": "cell",
+      "encode": {
+        "update": {
+          "width": {"signal": "concat_1_width"},
+          "height": {"signal": "concat_1_height"}
+        }
+      },
+      "marks": [
+        {
+          "name": "concat_1_layer_0_marks",
+          "type": "text",
+          "style": ["text"],
+          "from": {"data": "data_4"},
+          "encode": {
+            "update": {
+              "align": {"value": "left"},
+              "baseline": {"value": "top"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
+              "fill": {"value": "#142D4E"},
+              "description": {
+                "signal": "\"Annotation: \" + (isValid(datum[\"Annotation\"]) ? isArray(datum[\"Annotation\"]) ? join(datum[\"Annotation\"], ' ') : datum[\"Annotation\"] : \"\"+datum[\"Annotation\"])"
+              },
+              "x": {"value": 0},
+              "y": {"value": 0},
+              "text": {
+                "signal": "isValid(datum[\"Annotation\"]) ? datum[\"Annotation\"] : \"\"+datum[\"Annotation\"]"
+              }
+            }
+          }
+        },
+        {
+          "name": "concat_1_layer_1_marks",
+          "type": "text",
+          "style": ["text"],
+          "from": {"data": "source_2"},
+          "encode": {
+            "update": {
+              "opacity": {"value": 0.85},
+              "align": {"value": "left"},
+              "baseline": {"value": "top"},
+              "text": {
+                "value": [
+                  "Source: Australian Institute of Health and Welfare (AIHW), GEN Aged Care Data, 30 June 2025.",
+                  "Each bar is a share of all recipients (men and women together) of that care type, so the two care types can be compared fairly."
+                ]
+              },
+              "fontSize": {"value": 11},
+              "lineHeight": {"value": 14},
+              "fill": {"value": "#142D4E"},
+              "x": {"value": 0},
+              "y": {"value": 36}
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Home care", "Residential care"],
+      "range": ["#0072B2", "#E69F00"]
+    },
+    {
+      "name": "concat_0_concat_0_x",
+      "type": "linear",
+      "domain": [-20, 20],
+      "range": [0, {"signal": "concat_0_childWidth"}],
+      "nice": false,
+      "zero": true
+    },
+    {
+      "name": "concat_0_concat_0_y",
+      "type": "band",
+      "domain": {
+        "data": "data_0",
+        "field": "AgeGroup",
+        "sort": {"op": "sum", "field": "AgeOrder", "order": "descending"}
+      },
+      "range": [0, {"signal": "concat_0_height"}],
+      "paddingInner": 0.1,
+      "paddingOuter": 0.05
+    },
+    {
+      "name": "concat_0_concat_1_x",
+      "type": "linear",
+      "domain": [-20, 20],
+      "range": [0, {"signal": "concat_0_childWidth"}],
+      "nice": false,
+      "zero": true
+    },
+    {
+      "name": "concat_0_concat_1_y",
+      "type": "band",
+      "domain": {
+        "data": "data_2",
+        "field": "AgeGroup",
+        "sort": {"op": "sum", "field": "AgeOrder", "order": "descending"}
+      },
+      "range": [0, {"signal": "concat_0_height"}],
+      "paddingInner": 0.1,
+      "paddingOuter": 0.05
+    }
+  ],
+  "config": {
+    "axis": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "gridColor": "#E6EAF0"
+    },
+    "style": {
+      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "cell": {"stroke": null},
+      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
+    }
+  }
+}

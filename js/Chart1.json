@@ -1,0 +1,434 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "autosize": {"type": "fit", "contains": "padding"},
+  "background": "#FFFFFF",
+  "padding": {"left": 8, "right": 8, "top": 16, "bottom": 8},
+  "height": 380,
+  "style": "cell",
+  "data": [
+    {"name": "hover_store"},
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart01_ageing_population.csv",
+      "format": {"type": "csv", "parse": {"Year": "number"}, "delimiter": ","},
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.Year == 1980 ? 'Starting point (0%)' : '+' + format(datum['Growth Pct'], ',.1f') + '%'",
+          "as": "Growth Label"
+        },
+        {
+          "type": "formula",
+          "expr": "'+' + format(datum['Growth Pct'], ',.0f') + '%'",
+          "as": "Growth Short"
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "length(data(\"hover_store\")) && vlSelectionTest(\"hover_store\", datum)"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Year\"]) && isFinite(+datum[\"Year\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_1",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Year\"]) && isFinite(+datum[\"Year\"]) && isValid(datum[\"Growth Pct\"]) && isFinite(+datum[\"Growth Pct\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "source_0",
+      "transform": [
+        {"type": "filter", "expr": "datum.Year == 2025"},
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Year\"]) && isFinite(+datum[\"Year\"]) && isValid(datum[\"Growth Pct\"]) && isFinite(+datum[\"Growth Pct\"])"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "name": "width",
+      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+      "on": [
+        {
+          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+          "events": "window:resize"
+        },
+        {
+          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 300",
+          "events": "container:resize"
+        }
+      ]
+    },
+    {
+      "name": "unit",
+      "value": {},
+      "on": [
+        {"events": "pointermove", "update": "isTuple(group()) ? group() : unit"}
+      ]
+    },
+    {
+      "name": "hover",
+      "update": "vlSelectionResolve(\"hover_store\", \"union\", true, true)"
+    },
+    {
+      "name": "hover_tuple",
+      "on": [
+        {
+          "events": [
+            {
+              "source": "scope",
+              "type": "mouseover",
+              "markname": "layer_2_voronoi"
+            }
+          ],
+          "update": "datum && item().mark.marktype !== 'group' && indexof(item().mark.role, 'legend') < 0 ? {unit: \"layer_2\", fields: hover_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"Year\"]]} : null",
+          "force": true
+        },
+        {"events": [{"source": "view", "type": "mouseout"}], "update": "null"}
+      ]
+    },
+    {"name": "hover_tuple_fields", "value": [{"type": "E", "field": "Year"}]},
+    {
+      "name": "hover_toggle",
+      "value": false,
+      "on": [
+        {
+          "events": [
+            {
+              "source": "scope",
+              "type": "mouseover",
+              "markname": "layer_2_voronoi"
+            }
+          ],
+          "update": "event.shiftKey"
+        },
+        {"events": [{"source": "view", "type": "mouseout"}], "update": "false"}
+      ]
+    },
+    {
+      "name": "hover_modify",
+      "on": [
+        {
+          "events": {"signal": "hover_tuple"},
+          "update": "modify(\"hover_store\", hover_toggle ? null : hover_tuple, hover_toggle ? null : true, hover_toggle ? hover_tuple : null)"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "layer_0_marks",
+      "type": "rule",
+      "style": ["rule"],
+      "interactive": false,
+      "from": {"data": "data_0"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.35},
+          "strokeWidth": {"value": 1},
+          "stroke": {"value": "#142D4E"},
+          "description": {
+            "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\"))"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"value": 0},
+          "y2": {"field": {"group": "height"}}
+        }
+      }
+    },
+    {
+      "name": "layer_1_pathgroup",
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "faceted_path_layer_1_main",
+          "data": "source_0",
+          "groupby": ["Age Group", "Age Group"]
+        }
+      },
+      "encode": {
+        "update": {
+          "width": {"field": {"group": "width"}},
+          "height": {"field": {"group": "height"}}
+        }
+      },
+      "marks": [
+        {
+          "name": "layer_1_marks",
+          "type": "line",
+          "style": ["line"],
+          "sort": {"field": "x"},
+          "interactive": false,
+          "from": {"data": "faceted_path_layer_1_main"},
+          "encode": {
+            "update": {
+              "strokeCap": {"value": "round"},
+              "strokeWidth": {"value": 3.5},
+              "interpolate": {"value": "monotone"},
+              "stroke": {"scale": "color", "field": "Age Group"},
+              "strokeDash": {"scale": "strokeDash", "field": "Age Group"},
+              "description": {
+                "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Growth Pct: \" + (format(datum[\"Growth Pct\"], \"\")) + \"; Age Group: \" + (isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], ' ') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"])"
+              },
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "Growth Pct"},
+              "defined": {
+                "signal": "isValid(datum[\"Year\"]) && isFinite(+datum[\"Year\"]) && isValid(datum[\"Growth Pct\"]) && isFinite(+datum[\"Growth Pct\"])"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "layer_2_marks",
+      "type": "symbol",
+      "style": ["point"],
+      "interactive": true,
+      "from": {"data": "data_1"},
+      "encode": {
+        "update": {
+          "opacity": [
+            {
+              "test": "length(data(\"hover_store\")) && vlSelectionTest(\"hover_store\", datum)",
+              "value": 1
+            },
+            {"value": 0}
+          ],
+          "stroke": {"value": "#FFFFFF"},
+          "strokeWidth": {"value": 2},
+          "size": {"value": 90},
+          "cursor": {"value": "pointer"},
+          "fill": {"scale": "color", "field": "Age Group"},
+          "tooltip": {
+            "signal": "{\"Age group\": isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], '\\n') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"], \"Year\": format(datum[\"Year\"], \"d\"), \"Number of people\": format(datum[\"Population\"], \",d\"), \"Growth since 1980\": isValid(datum[\"Growth Label\"]) ? isArray(datum[\"Growth Label\"]) ? join(datum[\"Growth Label\"], '\\n') : datum[\"Growth Label\"] : \"\"+datum[\"Growth Label\"]}"
+          },
+          "ariaRoleDescription": {"value": "point"},
+          "description": {
+            "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Growth Pct: \" + (format(datum[\"Growth Pct\"], \"\")) + \"; Age Group: \" + (isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], ' ') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"]) + \"; Age group: \" + (isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], ' ') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"]) + \"; Number of people: \" + (format(datum[\"Population\"], \",d\")) + \"; Growth since 1980: \" + (isValid(datum[\"Growth Label\"]) ? isArray(datum[\"Growth Label\"]) ? join(datum[\"Growth Label\"], ' ') : datum[\"Growth Label\"] : \"\"+datum[\"Growth Label\"])"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"scale": "y", "field": "Growth Pct"}
+        }
+      }
+    },
+    {
+      "name": "layer_2_voronoi",
+      "type": "path",
+      "interactive": true,
+      "aria": false,
+      "from": {"data": "layer_2_marks"},
+      "encode": {
+        "update": {
+          "fill": {"value": "transparent"},
+          "strokeWidth": {"value": 0.35},
+          "stroke": {"value": "transparent"},
+          "isVoronoi": {"value": true},
+          "tooltip": {
+            "signal": "{\"Age group\": isValid(datum.datum[\"Age Group\"]) ? isArray(datum.datum[\"Age Group\"]) ? join(datum.datum[\"Age Group\"], '\\n') : datum.datum[\"Age Group\"] : \"\"+datum.datum[\"Age Group\"], \"Year\": format(datum.datum[\"Year\"], \"d\"), \"Number of people\": format(datum.datum[\"Population\"], \",d\"), \"Growth since 1980\": isValid(datum.datum[\"Growth Label\"]) ? isArray(datum.datum[\"Growth Label\"]) ? join(datum.datum[\"Growth Label\"], '\\n') : datum.datum[\"Growth Label\"] : \"\"+datum.datum[\"Growth Label\"]}"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "voronoi",
+          "x": {"expr": "datum.datum.x || 0"},
+          "y": {"expr": "datum.datum.y || 0"},
+          "size": [{"signal": "width"}, {"signal": "height"}]
+        }
+      ]
+    },
+    {
+      "name": "layer_3_marks",
+      "type": "symbol",
+      "style": ["point"],
+      "interactive": false,
+      "from": {"data": "data_2"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 1},
+          "stroke": {"value": "#FFFFFF"},
+          "strokeWidth": {"value": 2},
+          "size": {"value": 110},
+          "fill": {"scale": "color", "field": "Age Group"},
+          "ariaRoleDescription": {"value": "point"},
+          "description": {
+            "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Growth Pct: \" + (format(datum[\"Growth Pct\"], \"\")) + \"; Age Group: \" + (isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], ' ') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"])"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"scale": "y", "field": "Growth Pct"}
+        }
+      }
+    },
+    {
+      "name": "layer_4_marks",
+      "type": "text",
+      "style": ["text"],
+      "interactive": false,
+      "from": {"data": "data_2"},
+      "encode": {
+        "update": {
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "dx": {"value": 12},
+          "dy": {"value": -16},
+          "font": {"value": "Inter, Helvetica, Arial, sans-serif"},
+          "fontSize": {"value": 14},
+          "fontWeight": {"value": 700},
+          "fill": {"value": "#142D4E"},
+          "description": {
+            "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Growth Pct: \" + (format(datum[\"Growth Pct\"], \"\")) + \"; Age Group: \" + (isValid(datum[\"Age Group\"]) ? isArray(datum[\"Age Group\"]) ? join(datum[\"Age Group\"], ' ') : datum[\"Age Group\"] : \"\"+datum[\"Age Group\"])"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"scale": "y", "field": "Growth Pct"},
+          "text": {
+            "signal": "isValid(datum[\"Age Group\"]) ? datum[\"Age Group\"] : \"\"+datum[\"Age Group\"]"
+          }
+        }
+      }
+    },
+    {
+      "name": "layer_5_marks",
+      "type": "text",
+      "style": ["text"],
+      "interactive": false,
+      "from": {"data": "data_2"},
+      "encode": {
+        "update": {
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "dx": {"value": 12},
+          "dy": {"value": 6},
+          "font": {"value": "Inter, Helvetica, Arial, sans-serif"},
+          "fontSize": {"value": 24},
+          "fontWeight": {"value": 800},
+          "fill": {"value": "#142D4E"},
+          "description": {
+            "signal": "\"Year: \" + (format(datum[\"Year\"], \"d\")) + \"; Growth Pct: \" + (format(datum[\"Growth Pct\"], \"\")) + \"; Growth Short: \" + (isValid(datum[\"Growth Short\"]) ? isArray(datum[\"Growth Short\"]) ? join(datum[\"Growth Short\"], ' ') : datum[\"Growth Short\"] : \"\"+datum[\"Growth Short\"])"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"scale": "y", "field": "Growth Pct"},
+          "text": {
+            "signal": "isValid(datum[\"Growth Short\"]) ? datum[\"Growth Short\"] : \"\"+datum[\"Growth Short\"]"
+          }
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": [1980, 2038],
+      "range": [0, {"signal": "width"}],
+      "nice": false,
+      "zero": false
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [0, 560],
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Aged 65–84", "Aged 85+"],
+      "range": ["#0072B2", "#E69F00"]
+    },
+    {
+      "name": "strokeDash",
+      "type": "ordinal",
+      "domain": ["Aged 65–84", "Aged 85+"],
+      "range": [[1, 0], [7, 5]]
+    }
+  ],
+  "axes": [
+    {
+      "scale": "y",
+      "orient": "left",
+      "values": [0, 100, 200, 300, 400, 500],
+      "gridScale": "x",
+      "grid": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "domain": false,
+      "format": "d",
+      "values": [1980, 1990, 2000, 2010, 2020, 2025],
+      "labelFlush": true,
+      "labelOverlap": true,
+      "tickMinStep": 1,
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Growth in population since 1980",
+      "values": [0, 100, 200, 300, 400, 500],
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "signal": "datum.value == 0 ? '0%' : '+' + datum.value + '%'"
+            }
+          }
+        }
+      },
+      "zindex": 0
+    }
+  ],
+  "config": {
+    "axis": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "titlePadding": 12,
+      "gridColor": "#E6EAF0",
+      "gridWidth": 1,
+      "domainColor": "#9AA7B8",
+      "tickColor": "#9AA7B8"
+    },
+    "style": {
+      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
+      "cell": {"stroke": null},
+      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
+    }
+  }
+}
