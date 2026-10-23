@@ -1,199 +1,245 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "background": "white",
-  "padding": 5,
-  "width": 800,
-  "height": 560,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Where Are Australia's Residential Aged Care Facilities Concentrated?",
-    "frame": "group"
+    "text": "How Do Home Care Package Levels Vary by Age?",
+    "subtitle": [
+      "Each cell shows the share of one age group's Home Care Package recipients at that level, 30 June 2025.",
+      "Darker cells mean a larger share of that age group receives that package level."
+    ],
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 13,
+    "color": "#142D4E",
+    "subtitleColor": "#142D4E",
+    "offset": 12
   },
-  "style": ["view", "cell"],
-  "data": [
+  "background": "#FFFFFF",
+  "width": "container",
+  "height": 460,
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart08_home_care_packages_age_level_2025.csv"
+  },
+  "transform": [
     {
-      "name": "source_0",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
-      "format": {"type": "topojson", "feature": "australia_states"}
-    },
-    {"name": "source_2", "values": [{"a": 0}], "format": {}},
-    {
-      "name": "source_3",
-      "values": [{"t": "= 5 residential aged care facilities"}]
-    },
-    {
-      "name": "source_4",
-      "values": [{"t": "Groups with fewer than 5 facilities are not shown."}]
+      "calculate": "'Level ' + slice(datum.PackageLevel, 6)",
+      "as": "Package Level"
     },
     {
-      "name": "source_1",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart07_residential_facility_dot_map_2025.csv",
-      "format": {"type": "csv", "delimiter": ","},
-      "transform": [
-        {
-          "type": "formula",
-          "expr": "{'NSW':'New South Wales','VIC':'Victoria','QLD':'Queensland','WA':'Western Australia','SA':'South Australia','TAS':'Tasmania','ACT':'Australian Capital Territory','NT':'Northern Territory'}[datum.State]",
-          "as": "State name"
-        },
-        {
-          "type": "formula",
-          "expr": "floor(datum.FacilitiesRepresented / 5)",
-          "as": "Dots"
-        },
-        {"type": "filter", "expr": "datum.Dots >= 1"},
-        {"type": "formula", "expr": "sequence(0, datum.Dots)", "as": "k"},
-        {"type": "flatten", "fields": ["k"], "as": ["k"]},
-        {
-          "type": "formula",
-          "expr": "datum.Dots == 1 ? 0 : (datum.k % 2 == 0 ? -1 : 1) * 5",
-          "as": "dx"
-        },
-        {
-          "type": "formula",
-          "expr": "datum.Dots == 1 ? 0 : (floor(datum.k / 2) % 2 == 0 ? -1 : 1) * (datum.Dots == 2 ? 0 : 5)",
-          "as": "dy"
-        },
-        {
-          "type": "geojson",
-          "fields": ["Longitude", "Latitude"],
-          "signal": "layer_1_geojson_0"
-        },
-        {
-          "type": "geopoint",
-          "projection": "projection",
-          "fields": ["Longitude", "Latitude"],
-          "as": ["layer_1_x", "layer_1_y"]
-        }
-      ]
+      "calculate": "format(datum.PercentageWithinAgeGroup, '.1f') + '%'",
+      "as": "Label"
     }
   ],
-  "projections": [
+  "layer": [
     {
-      "name": "projection",
-      "size": {"signal": "[width, height]"},
-      "fit": {"signal": "[data('source_0'), layer_1_geojson_0]"},
-      "type": "mercator"
-    }
-  ],
-  "marks": [
-    {
-      "name": "layer_0_marks",
-      "type": "shape",
-      "style": ["geoshape"],
-      "from": {"data": "source_0"},
-      "encode": {
-        "update": {
-          "fill": {"value": "#F4F8FC"},
-          "stroke": {"value": "#B8CADB"},
-          "ariaRoleDescription": {"value": "geoshape"}
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "on": "mouseover",
+            "clear": "mouseout",
+            "fields": [
+              "AgeGroup",
+              "Package Level"
+            ]
+          }
         }
+      ],
+      "mark": {
+        "type": "rect",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 3,
+        "cursor": "pointer"
       },
-      "transform": [{"type": "geoshape", "projection": "projection"}]
-    },
-    {
-      "name": "layer_1_marks",
-      "type": "symbol",
-      "style": ["circle"],
-      "from": {"data": "source_1"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.9},
-          "stroke": {"value": "#FFFFFF"},
-          "strokeWidth": {"value": 0.5},
-          "size": {"value": 70},
-          "fill": {"value": "#0072B2"},
-          "tooltip": {
-            "signal": "{\"State or territory\": isValid(datum[\"State name\"]) ? isArray(datum[\"State name\"]) ? join(datum[\"State name\"], '\\n') : datum[\"State name\"] : \"\"+datum[\"State name\"], \"Region (Statistical Area Level 3)\": isValid(datum[\"SA3Name\"]) ? isArray(datum[\"SA3Name\"]) ? join(datum[\"SA3Name\"], '\\n') : datum[\"SA3Name\"] : \"\"+datum[\"SA3Name\"], \"Facilities in this group\": format(datum[\"FacilitiesRepresented\"], \"\"), \"Dots shown (1 dot = 5 facilities)\": format(datum[\"Dots\"], \"\"), \"Total facilities in this region\": format(datum[\"SA3FacilityTotal\"], \"\")}"
-          },
-          "ariaRoleDescription": {"value": "circle"},
-          "description": {
-            "signal": "\"Longitude: \" + (format(datum[\"Longitude\"], \"\")) + \"; Latitude: \" + (format(datum[\"Latitude\"], \"\")) + \"; dx: \" + (format(datum[\"dx\"], \"\")) + \"; dy: \" + (format(datum[\"dy\"], \"\")) + \"; State or territory: \" + (isValid(datum[\"State name\"]) ? isArray(datum[\"State name\"]) ? join(datum[\"State name\"], ' ') : datum[\"State name\"] : \"\"+datum[\"State name\"]) + \"; Region (Statistical Area Level 3): \" + (isValid(datum[\"SA3Name\"]) ? isArray(datum[\"SA3Name\"]) ? join(datum[\"SA3Name\"], ' ') : datum[\"SA3Name\"] : \"\"+datum[\"SA3Name\"]) + \"; Facilities in this group: \" + (format(datum[\"FacilitiesRepresented\"], \"\")) + \"; Dots shown (1 dot = 5 facilities): \" + (format(datum[\"Dots\"], \"\")) + \"; Total facilities in this region: \" + (format(datum[\"SA3FacilityTotal\"], \"\"))"
-          },
-          "x": {"field": "layer_1_x"},
-          "y": {"field": "layer_1_y"},
-          "shape": {"value": "circle"}
-        }
-      }
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "rect",
-      "style": ["rect"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.92},
-          "stroke": {"value": "#B8CADB"},
-          "cornerRadius": {"value": 6},
-          "fill": {"value": "#FFFFFF"},
-          "x": {"value": 10},
-          "x2": {"value": 395},
-          "y": {"value": 490},
-          "y2": {"value": 550}
-        }
-      }
-    },
-    {
-      "name": "layer_3_marks",
-      "type": "symbol",
-      "style": ["circle"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.9},
-          "fill": {"value": "#0072B2"},
-          "size": {"value": 70},
-          "ariaRoleDescription": {"value": "circle"},
-          "x": {"value": 26},
-          "y": {"value": 508},
-          "shape": {"value": "circle"}
-        }
-      }
-    },
-    {
-      "name": "layer_4_marks",
-      "type": "text",
-      "style": ["text"],
-      "from": {"data": "source_3"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "middle"},
-          "fontSize": {"value": 13},
-          "fontWeight": {"value": "bold"},
-          "fill": {"value": "#142D4E"},
-          "description": {
-            "signal": "\"t: \" + (isValid(datum[\"t\"]) ? isArray(datum[\"t\"]) ? join(datum[\"t\"], ' ') : datum[\"t\"] : \"\"+datum[\"t\"])"
-          },
-          "x": {"value": 40},
-          "y": {"value": 508},
-          "text": {
-            "signal": "isValid(datum[\"t\"]) ? datum[\"t\"] : \"\"+datum[\"t\"]"
+      "encoding": {
+        "x": {
+          "field": "Package Level",
+          "type": "ordinal",
+          "sort": [
+            "Level 1",
+            "Level 2",
+            "Level 3",
+            "Level 4"
+          ],
+          "axis": {
+            "title": "Home Care Package level (Level 1 = basic support, Level 4 = high support)",
+            "orient": "bottom",
+            "labelAngle": 0,
+            "labelFontSize": 13,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false,
+            "titlePadding": 12
           }
-        }
+        },
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": [
+            "100+",
+            "95–99",
+            "90–94",
+            "85–89",
+            "80–84",
+            "75–79",
+            "70–74",
+            "65–69",
+            "60–64",
+            "55–59",
+            "50–54",
+            "0–49"
+          ],
+          "axis": {
+            "title": "Age group (years)",
+            "labelFontSize": 12,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false
+          }
+        },
+        "color": {
+          "field": "PercentageWithinAgeGroup",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              40,
+              80
+            ],
+            "range": [
+              "#EAF4FF",
+              "#0072B2",
+              "#0A2F57"
+            ],
+            "clamp": true
+          },
+          "legend": {
+            "title": "Share of age group (%)",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 260,
+            "gradientThickness": 12,
+            "values": [
+              0,
+              20,
+              40,
+              60,
+              80
+            ],
+            "labelExpr": "datum.label + '%'",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "titleLimit": 240
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover",
+            "value": 1
+          },
+          "value": 0.82
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": 3
+          },
+          "value": 3
+        },
+        "tooltip": [
+          {
+            "field": "AgeGroup",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Package Level",
+            "type": "nominal",
+            "title": "Package level"
+          },
+          {
+            "field": "Recipients",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Recipients"
+          },
+          {
+            "field": "AgeGroupTotal",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Total recipients in age group"
+          },
+          {
+            "field": "PercentageWithinAgeGroup",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Share of age group (%)"
+          }
+        ]
       }
     },
     {
-      "name": "layer_5_marks",
-      "type": "text",
-      "style": ["text"],
-      "from": {"data": "source_4"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "middle"},
-          "fontSize": {"value": 12},
-          "fill": {"value": "#142D4E"},
-          "description": {
-            "signal": "\"t: \" + (isValid(datum[\"t\"]) ? isArray(datum[\"t\"]) ? join(datum[\"t\"], ' ') : datum[\"t\"] : \"\"+datum[\"t\"])"
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "x": {
+          "field": "Package Level",
+          "type": "ordinal",
+          "sort": [
+            "Level 1",
+            "Level 2",
+            "Level 3",
+            "Level 4"
+          ]
+        },
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": [
+            "100+",
+            "95–99",
+            "90–94",
+            "85–89",
+            "80–84",
+            "75–79",
+            "70–74",
+            "65–69",
+            "60–64",
+            "55–59",
+            "50–54",
+            "0–49"
+          ]
+        },
+        "text": {
+          "field": "Label",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.PercentageWithinAgeGroup >= 30",
+            "value": "#FFFFFF"
           },
-          "x": {"value": 20},
-          "y": {"value": 531},
-          "text": {
-            "signal": "isValid(datum[\"t\"]) ? datum[\"t\"] : \"\"+datum[\"t\"]"
-          }
+          "value": "#142D4E"
         }
       }
     }
   ],
-  "config": {}
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Inter, Helvetica, Arial, sans-serif",
+    "axis": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E"
+    },
+    "legend": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E"
+    }
+  }
 }
