@@ -1,15 +1,8 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v6.json",
-  "background": "#FFFFFF",
-  "padding": 5,
-  "width": 400,
-  "height": 400,
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Which Type of Aged Care Is Used the Most in Australia?",
-    "subtitle": [
-      "Each square is about 1% of the combined recipient counts across Home care, Residential care and Flexible care, 30 June 2025.",
-      "These are shares of summed service counts, not unique people, and not shares of all older Australians."
-    ],
+    "subtitle": ["Each square is about 1% of the combined recipient counts across Home care, Residential care and Flexible care, 30 June 2025.", "These are shares of summed service counts, not unique people, and not shares of all older Australians."],
     "anchor": "start",
     "fontSize": 22,
     "subtitleFontSize": 13,
@@ -17,229 +10,108 @@
     "subtitleColor": "#142D4E",
     "offset": 12
   },
-  "style": "cell",
-  "data": [
-    {"name": "hover_store"},
-    {"name": "source_1", "values": [{"x": 0}], "format": {}},
+  "width": 400,
+  "height": 400,
+  "background": "#FFFFFF",
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart05_aged_care_waffle_2025.csv"
+  },
+  "layer": [
     {
-      "name": "source_0",
-      "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart05_aged_care_waffle_2025.csv",
-      "format": {"type": "csv", "delimiter": ","},
-      "transform": [
+      "params": [
         {
-          "type": "formula",
-          "expr": "datum[\"Column\"]===1 ? 0 : datum[\"Column\"]===2 ? 1 : datum[\"Column\"]===3 ? 2 : datum[\"Column\"]===4 ? 3 : datum[\"Column\"]===5 ? 4 : datum[\"Column\"]===6 ? 5 : datum[\"Column\"]===7 ? 6 : datum[\"Column\"]===8 ? 7 : datum[\"Column\"]===9 ? 8 : datum[\"Column\"]===10 ? 9 : 10",
-          "as": "x_Column_sort_index"
+          "name": "hover",
+          "select": {"type": "point", "fields": ["CareType"], "on": "mouseover", "clear": "mouseout"}
+        }
+      ],
+      "mark": {"type": "rect", "cornerRadius": 4},
+      "encoding": {
+        "x": {
+          "field": "Column",
+          "type": "ordinal",
+          "axis": null,
+          "scale": {"paddingInner": 0.12, "paddingOuter": 0},
+          "sort": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
-        {
-          "type": "formula",
-          "expr": "datum[\"Row\"]===1 ? 0 : datum[\"Row\"]===2 ? 1 : datum[\"Row\"]===3 ? 2 : datum[\"Row\"]===4 ? 3 : datum[\"Row\"]===5 ? 4 : datum[\"Row\"]===6 ? 5 : datum[\"Row\"]===7 ? 6 : datum[\"Row\"]===8 ? 7 : datum[\"Row\"]===9 ? 8 : datum[\"Row\"]===10 ? 9 : 10",
-          "as": "y_Row_sort_index"
-        }
-      ]
-    }
-  ],
-  "signals": [
-    {
-      "name": "unit",
-      "value": {},
-      "on": [
-        {"events": "pointermove", "update": "isTuple(group()) ? group() : unit"}
-      ]
-    },
-    {
-      "name": "hover",
-      "update": "vlSelectionResolve(\"hover_store\", \"union\", true, true)"
-    },
-    {
-      "name": "hover_tuple",
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "mouseover"}],
-          "update": "datum && item().mark.marktype !== 'group' && indexof(item().mark.role, 'legend') < 0 ? {unit: \"layer_0\", fields: hover_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"CareType\"]]} : null",
-          "force": true
+        "y": {
+          "field": "Row",
+          "type": "ordinal",
+          "axis": null,
+          "scale": {"paddingInner": 0.12, "paddingOuter": 0},
+          "sort": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
-        {"events": [{"source": "view", "type": "mouseout"}], "update": "null"}
-      ]
-    },
-    {
-      "name": "hover_tuple_fields",
-      "value": [{"type": "E", "field": "CareType"}]
-    },
-    {
-      "name": "hover_toggle",
-      "value": false,
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "mouseover"}],
-          "update": "event.shiftKey"
-        },
-        {"events": [{"source": "view", "type": "mouseout"}], "update": "false"}
-      ]
-    },
-    {
-      "name": "hover_modify",
-      "on": [
-        {
-          "events": {"signal": "hover_tuple"},
-          "update": "modify(\"hover_store\", hover_toggle ? null : hover_tuple, hover_toggle ? null : true, hover_toggle ? hover_tuple : null)"
-        }
-      ]
-    }
-  ],
-  "marks": [
-    {
-      "name": "layer_0_marks",
-      "type": "rect",
-      "style": ["rect"],
-      "interactive": true,
-      "from": {"data": "source_0"},
-      "encode": {
-        "update": {
-          "cursor": {"value": "pointer"},
-          "cornerRadius": {"value": 4},
-          "fill": {"scale": "color", "field": "CareType"},
-          "opacity": [
-            {
-              "test": "!length(data(\"hover_store\")) || vlSelectionTest(\"hover_store\", datum)",
-              "value": 1
-            },
-            {"value": 0.35}
-          ],
-          "tooltip": {
-            "signal": "{\"Care type\": isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], '\\n') : datum[\"CareType\"] : \"\"+datum[\"CareType\"], \"Recipients\": format(datum[\"Recipients\"], \",\"), \"Share of combined counts (%)\": format(datum[\"SharePercent\"], \".4f\")}"
+        "color": {
+          "field": "CareType",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Home care", "Residential care", "Flexible care"],
+            "range": ["#0072B2", "#E69F00", "#009E73"]
           },
-          "description": {
-            "signal": "\"Column: \" + (isValid(datum[\"Column\"]) ? isArray(datum[\"Column\"]) ? join(datum[\"Column\"], ' ') : datum[\"Column\"] : \"\"+datum[\"Column\"]) + \"; Row: \" + (isValid(datum[\"Row\"]) ? isArray(datum[\"Row\"]) ? join(datum[\"Row\"], ' ') : datum[\"Row\"] : \"\"+datum[\"Row\"]) + \"; CareType: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Care type: \" + (isValid(datum[\"CareType\"]) ? isArray(datum[\"CareType\"]) ? join(datum[\"CareType\"], ' ') : datum[\"CareType\"] : \"\"+datum[\"CareType\"]) + \"; Recipients: \" + (format(datum[\"Recipients\"], \",\")) + \"; Share of combined counts (%): \" + (format(datum[\"SharePercent\"], \".4f\"))"
-          },
-          "x": {"scale": "x", "field": "Column"},
-          "width": {"signal": "max(0.25, bandwidth('x'))"},
-          "y": {"scale": "y", "field": "Row"},
-          "height": {"signal": "max(0.25, bandwidth('y'))"}
-        }
-      }
-    },
-    {
-      "name": "layer_1_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "source_1"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "baseline": {"value": "top"},
-          "text": {
-            "value": [
-              "Home care accounts for",
-              "nearly 58% of reported",
-              "aged care recipients",
-              "across these services."
-            ]
-          },
-          "fontSize": {"value": 22},
-          "fontWeight": {"value": "bold"},
-          "lineHeight": {"value": 28},
-          "fill": {"value": "#142D4E"},
-          "x": {"value": 440},
-          "y": {"value": 20}
-        }
-      }
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "source_1"},
-      "encode": {
-        "update": {
-          "opacity": {"value": 0.85},
-          "align": {"value": "left"},
-          "baseline": {"value": "top"},
-          "text": {
-            "value": [
-              "Source: Australian Institute of Health and Welfare (AIHW), GEN Aged Care Data, 30 June 2025.",
-              "Shares are calculated from summed service-location counts across the three care types."
-            ]
-          },
-          "fontSize": {"value": 11},
-          "lineHeight": {"value": 14},
-          "fill": {"value": "#142D4E"},
-          "x": {"value": 0},
-          "y": {"value": 425}
-        }
-      }
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "band",
-      "domain": {
-        "data": "source_0",
-        "field": "Column",
-        "sort": {"op": "min", "field": "x_Column_sort_index"}
-      },
-      "range": [0, {"signal": "width"}],
-      "paddingInner": 0.12,
-      "paddingOuter": 0
-    },
-    {
-      "name": "y",
-      "type": "band",
-      "domain": {
-        "data": "source_0",
-        "field": "Row",
-        "sort": {"op": "min", "field": "y_Row_sort_index"}
-      },
-      "range": [0, {"signal": "height"}],
-      "paddingInner": 0.12,
-      "paddingOuter": 0
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "domain": ["Home care", "Residential care", "Flexible care"],
-      "range": ["#0072B2", "#E69F00", "#009E73"]
-    }
-  ],
-  "legends": [
-    {
-      "labelColor": "#142D4E",
-      "labelFontSize": 13,
-      "labelLimit": 360,
-      "legendX": 440,
-      "legendY": 215,
-      "orient": "none",
-      "rowPadding": 8,
-      "symbolSize": 260,
-      "symbolType": "square",
-      "title": "Share of combined recipient counts",
-      "titleColor": "#142D4E",
-      "titleFontSize": 13,
-      "titleLimit": 360,
-      "fill": "color",
-      "encode": {
-        "symbols": {"update": {"opacity": {"value": 1}}},
-        "labels": {
-          "update": {
-            "text": {
-              "signal": "datum.label == 'Home care' ? 'Home care: 57.9472%' : datum.label == 'Residential care' ? 'Residential care: 40.9139%' : 'Flexible care: 1.1389%'"
-            }
+          "legend": {
+            "title": "Share of combined recipient counts",
+            "orient": "none",
+            "legendX": 440,
+            "legendY": 215,
+            "symbolType": "square",
+            "symbolSize": 260,
+            "titleColor": "#142D4E",
+            "labelColor": "#142D4E",
+            "titleFontSize": 13,
+            "labelFontSize": 13,
+            "labelLimit": 360,
+            "rowPadding": 8,
+            "labelExpr": "datum.label == 'Home care' ? 'Home care: 57.9472% (288,397 recipients)' : datum.label == 'Residential care' ? 'Residential care: 40.9139% (203,624 recipients)' : 'Flexible care: 1.1389% (5,668 recipients)'",
+            "titleLimit": 360
           }
-        }
+        },
+        "opacity": {
+          "condition": {"param": "hover", "empty": true, "value": 1},
+          "value": 0.35
+        },
+        "tooltip": [
+          {"field": "CareType", "type": "nominal", "title": "Care type"},
+          {"field": "Recipients", "type": "quantitative", "format": ",", "title": "Recipients"},
+          {"field": "SharePercent", "type": "quantitative", "format": ".4f", "title": "Share of combined counts (%)"}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"x": 0}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 22,
+        "fontWeight": "bold",
+        "color": "#142D4E",
+        "lineHeight": 28,
+        "text": ["Home care accounts for", "nearly 58% of reported", "aged care recipients", "across these services."]
+      },
+      "encoding": {
+        "x": {"value": 440},
+        "y": {"value": 20}
+      }
+    },
+    {
+      "data": {"values": [{"x": 0}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 11,
+        "opacity": 0.85,
+        "color": "#142D4E",
+        "lineHeight": 14,
+        "text": ["Source: Australian Institute of Health and Welfare (AIHW), GEN Aged Care Data, 30 June 2025.", "Shares are calculated from summed service-location counts across the three care types."]
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "y": {"value": 425}
       }
     }
   ],
   "config": {
-    "style": {
-      "guide-label": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "guide-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-title": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "group-subtitle": {"font": "Inter, Helvetica, Arial, sans-serif"},
-      "cell": {"stroke": null},
-      "text": {"font": "Inter, Helvetica, Arial, sans-serif"}
-    }
+    "view": {"stroke": null},
+    "font": "Inter, Helvetica, Arial, sans-serif"
   }
 }
