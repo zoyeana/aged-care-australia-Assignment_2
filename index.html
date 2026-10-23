@@ -238,14 +238,13 @@
           <li>Package percentages are within each age group.</li>
           <li>Charts show snapshots, not people changing levels.</li>
         </ul>
-        <p class="credit">FIT3179 Data Visualisation, Monash University.<br>Created by [Your name], October 2026.<br>AI tools assisted with code and writing.</p>
+        <p class="credit">FIT3179 Data Visualisation, Monash University.<br>Created by Nafisa Zoyeana, October 2026.<br></p>
       </div>
     </div>
   </footer>
 
   <script>
-/* ---------- Charts: same method as the Week 7 notes ---------- */
-// The Vega-Lite JSON files are stored in the js folder.
+
 var chart_folder = "js/";
 
 var vg_1 = chart_folder + "Chart1.json";
@@ -258,8 +257,7 @@ var vg_7 = chart_folder + "Chart7.json";
 var vg_8 = chart_folder + "Chart8.json";
 var vg_9 = chart_folder + "Chart9.json";
 
-// Fixed-width charts are scaled down to fit their column on smaller screens.
-// The charts themselves are not changed.
+
 function fitChart(result) {
     var spec = result.vlSpec || {};
     if (spec.width === "container") { return; }
