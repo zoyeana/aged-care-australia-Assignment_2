@@ -1,0 +1,342 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "At What Age Is High-Level Home Care Most Common?",
+    "subtitle": "The percentage of Home Care Package recipients receiving Level 4 support across age groups in Australia, 2025.",
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 13,
+    "color": "#142D4E",
+    "subtitleColor": "#142D4E",
+    "offset": 12,
+    "subtitlePadding": 4
+  },
+  "background": "#FFFFFF",
+  "width": "container",
+  "height": 480,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart08_home_care_packages_age_level_2025.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.PackageLevel == 'LEVEL 4' ? datum.Recipients : 0",
+      "as": "L4Recipients"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "L4Recipients",
+          "as": "NatL4"
+        },
+        {
+          "op": "sum",
+          "field": "Recipients",
+          "as": "NatAll"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.NatL4 / datum.NatAll * 100",
+      "as": "NationalPct"
+    },
+    {
+      "filter": "datum.PackageLevel == 'LEVEL 4'"
+    }
+  ],
+  "layer": [
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "max",
+              "field": "NationalPct",
+              "as": "NationalPct"
+            }
+          ]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "#142D4E",
+        "strokeDash": [
+          4,
+          4
+        ],
+        "strokeWidth": 1.2,
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "NationalPct",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "max",
+              "field": "NationalPct",
+              "as": "NationalPct"
+            }
+          ]
+        },
+        {
+          "calculate": "'All ages: ' + format(datum.NationalPct, '.1f') + '%'",
+          "as": "RefLabel"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "dx": 6,
+        "dy": 4,
+        "color": "#142D4E",
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "NationalPct",
+          "type": "quantitative"
+        },
+        "y": {
+          "value": 0
+        },
+        "text": {
+          "field": "RefLabel",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
+          },
+          "axis": {
+            "title": "Age group (years)",
+            "labelFontSize": 13,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false,
+            "labelPadding": 8,
+            "grid": false
+          }
+        },
+        "x": {
+          "field": "Zero",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "PercentageWithinAgeGroup"
+        },
+        "color": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": "#D55E00"
+          },
+          "value": "#F2C6A0"
+        },
+        "tooltip": [
+          {
+            "field": "AgeGroup",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Recipients",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Level 4 recipients"
+          },
+          {
+            "field": "AgeGroupTotal",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Total Home Care Package recipients in age group"
+          },
+          {
+            "field": "PercentageWithinAgeGroup",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Receiving Level 4 (%)"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "0",
+          "as": "Zero"
+        }
+      ]
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "on": "mouseover",
+            "clear": "mouseout",
+            "fields": [
+              "AgeGroup"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 80,
+        "opacity": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "PercentageWithinAgeGroup",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              90
+            ],
+            "nice": false
+          },
+          "axis": {
+            "title": "Home Care Package recipients receiving Level 4 (% of the age group's recipients)",
+            "values": [
+              0,
+              20,
+              40,
+              60,
+              80
+            ],
+            "labelExpr": "datum.label + '%'",
+            "gridColor": "#E8EEF4",
+            "labelFontSize": 12,
+            "titleFontSize": 12,
+            "ticks": false,
+            "domain": false,
+            "titlePadding": 12
+          }
+        },
+        "color": {
+          "value": "#D55E00"
+        },
+        "stroke": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": "#142D4E"
+          },
+          "value": "#FFFFFF"
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": 2
+          },
+          "value": 1
+        },
+        "tooltip": [
+          {
+            "field": "AgeGroup",
+            "type": "nominal",
+            "title": "Age group"
+          },
+          {
+            "field": "Recipients",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Level 4 recipients"
+          },
+          {
+            "field": "AgeGroupTotal",
+            "type": "quantitative",
+            "format": ",",
+            "title": "Total Home Care Package recipients in age group"
+          },
+          {
+            "field": "PercentageWithinAgeGroup",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Receiving Level 4 (%)"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "format(datum.PercentageWithinAgeGroup, '.1f') + '%'",
+          "as": "Label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "color": "#142D4E",
+        "fontSize": 12,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "y": {
+          "field": "AgeGroup",
+          "type": "ordinal",
+          "sort": {
+            "field": "PercentageWithinAgeGroup",
+            "op": "max",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "PercentageWithinAgeGroup",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Inter, Helvetica, Arial, sans-serif",
+    "axis": {
+      "labelColor": "#142D4E",
+      "titleColor": "#142D4E"
+    }
+  }
+}
