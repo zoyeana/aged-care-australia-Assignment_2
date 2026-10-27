@@ -1,0 +1,393 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where Aged Care Is Used",
+    "subtitle": [
+      "Distribution of aged care recipients across Australian states and territories,",
+      "June 2025."
+    ],
+    "anchor": "start",
+    "fontSize": 22,
+    "fontWeight": "bold",
+    "subtitleFontSize": 13,
+    "color": "#183B4E",
+    "subtitleColor": "#64748B",
+    "subtitlePadding": 6,
+    "offset": 16
+  },
+  "width": "container",
+  "height": 520,
+  "background": "#FFFFFF",
+  "params": [
+    {
+      "name": "Care_selected",
+      "value": "Home care",
+      "bind": {
+        "input": "radio",
+        "options": ["Home care", "Residential care"],
+        "labels": ["Home Care", "Residential Care"],
+        "name": "Care type: "
+      }
+    }
+  ],
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": [-132, 0]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
+        "format": {"type": "topojson", "feature": "australia_states"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#F1F4F3",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1.2
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart04_aged_care_proportional_symbol_map_2025.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "Recipients": "number",
+            "Latitude": "number",
+            "Longitude": "number"
+          }
+        }
+      },
+      "transform": [
+        {"filter": "datum.CareType != 'Flexible care'"},
+        {"calculate": "datum.CareType == Care_selected", "as": "Is Selected"},
+        {
+          "calculate": "utcFormat(toDate(datum.Date), '%-d %B %Y')",
+          "as": "Reporting Date"
+        },
+        {
+          "calculate": "sqrt((datum.Recipients < 1000 ? 40 : datum.Recipients < 5000 ? 150 : datum.Recipients < 20000 ? 450 : datum.Recipients < 50000 ? 1000 : 1900) * min(1, pow(width / 900, 2)) / PI)",
+          "as": "Radius"
+        },
+        {
+          "calculate": "[datum.StateCode, format(datum.Recipients, ',')]",
+          "as": "Label"
+        },
+        {"calculate": "datum.Radius + 20", "as": "Label Offset"}
+      ],
+      "layer": [
+        {
+          "params": [
+            {
+              "name": "State_hover",
+              "select": {
+                "type": "point",
+                "fields": ["StateCode"],
+                "on": "mouseover",
+                "clear": "mouseout"
+              }
+            }
+          ],
+          "mark": {"type": "circle", "cursor": "pointer"},
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "size": {
+              "condition": {
+                "test": "datum['Is Selected']",
+                "field": "Recipients",
+                "type": "quantitative",
+                "scale": {
+                  "type": "threshold",
+                  "domain": [1000, 5000, 20000, 50000],
+                  "range": [
+                    {"expr": "40 * min(1, pow(width / 900, 2))"},
+                    {"expr": "150 * min(1, pow(width / 900, 2))"},
+                    {"expr": "450 * min(1, pow(width / 900, 2))"},
+                    {"expr": "1000 * min(1, pow(width / 900, 2))"},
+                    {"expr": "1900 * min(1, pow(width / 900, 2))"}
+                  ]
+                },
+                "legend": {
+                  "title": "Recipients",
+                  "orient": "top",
+                  "direction": "vertical",
+                  "symbolFillColor": {
+                    "expr": "Care_selected == 'Home care' ? '#377E88' : '#D99A62'"
+                  },
+                  "symbolOpacity": 0.7,
+                  "symbolStrokeColor": "#FFFFFF",
+                  "symbolStrokeWidth": 1,
+                  "titleColor": "#183B4E",
+                  "labelColor": "#183B4E",
+                  "titleFontSize": 12,
+                  "labelFontSize": 12,
+                  "titleLimit": 300,
+                  "offset": 10,
+                  "rowPadding": 6,
+                  "labelLimit": 200,
+                  "labelExpr": "['Under 1,000', '1,000 – 4,999', '5,000 – 19,999', '20,000 – 49,999', '50,000 and over'][datum.index]",
+                  "labelOffset": 10
+                }
+              },
+              "value": 0
+            },
+            "color": {
+              "field": "CareType",
+              "type": "nominal",
+              "scale": {
+                "domain": ["Home care", "Residential care"],
+                "range": ["#377E88", "#D99A62"]
+              },
+              "legend": null
+            },
+            "order": {
+              "field": "Recipients",
+              "type": "quantitative",
+              "sort": "descending"
+            },
+            "opacity": {
+              "condition": {"param": "State_hover", "value": 0.72},
+              "value": 0.3
+            },
+            "stroke": {
+              "condition": {
+                "param": "State_hover",
+                "empty": false,
+                "value": "#183B4E"
+              },
+              "value": "#FFFFFF"
+            },
+            "strokeWidth": {
+              "condition": {
+                "param": "State_hover",
+                "empty": false,
+                "value": 2.5
+              },
+              "value": 1.2
+            },
+            "tooltip": [
+              {
+                "field": "State",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {"field": "CareType", "type": "nominal", "title": "Care type"},
+              {
+                "field": "Recipients",
+                "type": "quantitative",
+                "format": ",",
+                "title": "Recipients"
+              },
+              {
+                "field": "Reporting Date",
+                "type": "nominal",
+                "title": "Reporting date"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [{"filter": "datum['Is Selected']"}],
+          "mark": {
+            "type": "circle",
+            "size": 7,
+            "color": "#183B4E",
+            "opacity": 0.7
+          },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "tooltip": [
+              {
+                "field": "State",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {"field": "CareType", "type": "nominal", "title": "Care type"},
+              {
+                "field": "Recipients",
+                "type": "quantitative",
+                "format": ",",
+                "title": "Recipients"
+              },
+              {
+                "field": "Reporting Date",
+                "type": "nominal",
+                "title": "Reporting date"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Is Selected'] && datum.StateCode != 'ACT' && datum.StateCode != 'VIC'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "baseline": "bottom",
+            "fontSize": 12,
+            "lineHeight": 14,
+            "color": "#183B4E"
+          },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "radius": {
+              "field": "Label Offset",
+              "type": "quantitative",
+              "scale": null
+            },
+            "theta": {"value": 0},
+            "text": {"field": "Label"},
+            "opacity": {
+              "condition": {"param": "State_hover", "value": 1},
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "State",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {"field": "CareType", "type": "nominal", "title": "Care type"},
+              {
+                "field": "Recipients",
+                "type": "quantitative",
+                "format": ",",
+                "title": "Recipients"
+              },
+              {
+                "field": "Reporting Date",
+                "type": "nominal",
+                "title": "Reporting date"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {"filter": "datum['Is Selected'] && datum.StateCode == 'ACT'"}
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 6,
+            "fontSize": 12,
+            "lineHeight": 14,
+            "color": "#183B4E"
+          },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "radius": {
+              "field": "Radius",
+              "type": "quantitative",
+              "scale": null
+            },
+            "theta": {"value": 1.5708},
+            "text": {"field": "Label"},
+            "opacity": {
+              "condition": {"param": "State_hover", "value": 1},
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "State",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {"field": "CareType", "type": "nominal", "title": "Care type"},
+              {
+                "field": "Recipients",
+                "type": "quantitative",
+                "format": ",",
+                "title": "Recipients"
+              },
+              {
+                "field": "Reporting Date",
+                "type": "nominal",
+                "title": "Reporting date"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {"filter": "datum['Is Selected'] && datum.StateCode == 'VIC'"}
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "middle",
+            "dx": -6,
+            "fontSize": 12,
+            "lineHeight": 14,
+            "color": "#183B4E"
+          },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "radius": {
+              "field": "Radius",
+              "type": "quantitative",
+              "scale": null
+            },
+            "theta": {"value": -1.5708},
+            "text": {"field": "Label"},
+            "opacity": {
+              "condition": {"param": "State_hover", "value": 1},
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "State",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {"field": "CareType", "type": "nominal", "title": "Care type"},
+              {
+                "field": "Recipients",
+                "type": "quantitative",
+                "format": ",",
+                "title": "Recipients"
+              },
+              {
+                "field": "Reporting Date",
+                "type": "nominal",
+                "title": "Reporting date"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 11,
+        "color": "#64748B",
+        "lineHeight": 15,
+        "text": [
+          "Circles sit at a representative point in each state or territory. They show state totals",
+          "by service location (ACPR aggregation), not where recipients live. Circle size shows the",
+          "range each recipient count falls in, using the same ranges for both care types.",
+          "Source: AIHW GEN Aged Care Data, People using aged care by region, Tables 3.3 and 4.3.",
+          "Reporting date: 30 June 2025."
+        ],
+        "x": 0,
+        "y": {"expr": "height + 12"}
+      }
+    }
+  ],
+  "config": {"view": {"stroke": null}, "text": {"color": "#183B4E"}}
+}
