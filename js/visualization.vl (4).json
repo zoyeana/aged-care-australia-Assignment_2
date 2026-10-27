@@ -2,6 +2,16 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 640,
+  "title": {
+    "text": "Residential Aged Care Facilities Across Australia",
+    "subtitle": "June 2026",
+    "anchor": "start",
+    "fontSize": 20,
+    "subtitleFontSize": 13,
+    "color": "#183B4E",
+    "subtitleColor": "#64748B",
+    "offset": 12
+  },
   "params": [
     {
       "name": "State_selected",
