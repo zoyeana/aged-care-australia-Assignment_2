@@ -1,245 +1,300 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 640,
   "title": {
-    "text": "How Do Home Care Package Levels Vary by Age?",
-    "subtitle": [
-      "Each cell shows the share of one age group's Home Care Package recipients at that level, 30 June 2025.",
-      "Darker cells mean a larger share of that age group receives that package level."
-    ],
+    "text": "Residential Aged Care Facilities Across Australia",
+    "subtitle": "June 2026",
     "anchor": "start",
-    "fontSize": 22,
+    "fontSize": 20,
     "subtitleFontSize": 13,
-    "color": "#142D4E",
-    "subtitleColor": "#142D4E",
+    "color": "#183B4E",
+    "subtitleColor": "#64748B",
     "offset": 12
   },
-  "background": "#FFFFFF",
-  "width": "container",
-  "height": 460,
-  "data": {
-    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/chart08_home_care_packages_age_level_2025.csv"
-  },
-  "transform": [
+  "params": [
     {
-      "calculate": "'Level ' + slice(datum.PackageLevel, 6)",
-      "as": "Package Level"
-    },
-    {
-      "calculate": "format(datum.PercentageWithinAgeGroup, '.1f') + '%'",
-      "as": "Label"
+      "name": "State_selected",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", "NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+        "labels": [
+          "All states",
+          "New South Wales",
+          "Victoria",
+          "Queensland",
+          "Western Australia",
+          "South Australia",
+          "Tasmania",
+          "Australian Capital Territory",
+          "Northern Territory"
+        ],
+        "name": "Highlight state: "
+      }
     }
   ],
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": [-132, 0]
+  },
   "layer": [
     {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
+        "format": {"type": "topojson", "feature": "australia_states"}
+      },
+      "mark": {"type": "geoshape", "stroke": "#9FB1AC", "strokeWidth": 0.8},
+      "encoding": {
+        "fill": {
+          "condition": {
+            "test": "State_selected != 'All' && datum.properties.code == State_selected",
+            "value": "#D3E4F1"
+          },
+          "value": "#EDF1EF"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Name": "Western Australia", "lon": 121.5, "lat": -25.8},
+          {"Name": "Northern Territory", "lon": 133.4, "lat": -19.8},
+          {"Name": "South Australia", "lon": 135, "lat": -29.4},
+          {"Name": "Queensland", "lon": 144.6, "lat": -22.6},
+          {"Name": "New South Wales", "lon": 144.4, "lat": -31.2},
+          {"Name": "Victoria", "lon": 142.6, "lat": -39.4},
+          {"Name": "Tasmania", "lon": 145.9, "lat": -44.2}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#5B6F69",
+        "opacity": 0.9
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "Name"}
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_residential_facilities_2026_map.csv",
+        "format": {
+          "type": "csv",
+          "parse": {"latitude": "number", "longitude": "number"}
+        }
+      },
+      "transform": [
+        {"filter": "isValid(datum.latitude) && isValid(datum.longitude)"},
+        {
+          "window": [{"op": "row_number", "as": "Order in State"}],
+          "groupby": ["state"],
+          "sort": [
+            {"field": "sa3_code", "order": "ascending"},
+            {"field": "longitude", "order": "ascending"}
+          ]
+        },
+        {
+          "joinaggregate": [{"op": "count", "as": "Facilities in Area"}],
+          "groupby": ["sa3_name"]
+        },
+        {
+          "lookup": "state",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_states.topojson",
+              "format": {"type": "topojson", "feature": "australia_states"}
+            },
+            "key": "properties.code",
+            "fields": ["properties.name"]
+          },
+          "as": ["State Name"]
+        },
+        {"filter": "datum['Order in State'] % 5 == 0"}
+      ],
       "params": [
         {
-          "name": "hover",
+          "name": "Facility_hover",
           "select": {
             "type": "point",
             "on": "mouseover",
             "clear": "mouseout",
-            "fields": [
-              "AgeGroup",
-              "Package Level"
-            ]
+            "nearest": true,
+            "fields": ["state", "Order in State"]
           }
         }
       ],
-      "mark": {
-        "type": "rect",
-        "stroke": "#FFFFFF",
-        "strokeWidth": 3,
-        "cursor": "pointer"
-      },
+      "mark": {"type": "circle", "stroke": "#FFFFFF", "cursor": "pointer"},
       "encoding": {
-        "x": {
-          "field": "Package Level",
-          "type": "ordinal",
-          "sort": [
-            "Level 1",
-            "Level 2",
-            "Level 3",
-            "Level 4"
-          ],
-          "axis": {
-            "title": "Home Care Package level (Level 1 = basic support, Level 4 = high support)",
-            "orient": "bottom",
-            "labelAngle": 0,
-            "labelFontSize": 13,
-            "titleFontSize": 12,
-            "ticks": false,
-            "domain": false,
-            "titlePadding": 12
-          }
-        },
-        "y": {
-          "field": "AgeGroup",
-          "type": "ordinal",
-          "sort": [
-            "100+",
-            "95–99",
-            "90–94",
-            "85–89",
-            "80–84",
-            "75–79",
-            "70–74",
-            "65–69",
-            "60–64",
-            "55–59",
-            "50–54",
-            "0–49"
-          ],
-          "axis": {
-            "title": "Age group (years)",
-            "labelFontSize": 12,
-            "titleFontSize": 12,
-            "ticks": false,
-            "domain": false
-          }
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "size": {
+          "condition": {
+            "param": "Facility_hover",
+            "empty": false,
+            "value": 140
+          },
+          "value": 28
         },
         "color": {
-          "field": "PercentageWithinAgeGroup",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              40,
-              80
-            ],
-            "range": [
-              "#EAF4FF",
-              "#0072B2",
-              "#0A2F57"
-            ],
-            "clamp": true
-          },
-          "legend": {
-            "title": "Share of age group (%)",
-            "orient": "bottom",
-            "direction": "horizontal",
-            "gradientLength": 260,
-            "gradientThickness": 12,
-            "values": [
-              0,
-              20,
-              40,
-              60,
-              80
-            ],
-            "labelExpr": "datum.label + '%'",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
-            "titleLimit": 240
-          }
-        },
-        "opacity": {
           "condition": {
-            "param": "hover",
-            "value": 1
+            "param": "Facility_hover",
+            "empty": false,
+            "value": "#E69F00"
           },
-          "value": 0.82
+          "value": "#0072B2"
         },
         "strokeWidth": {
-          "condition": {
-            "param": "hover",
-            "empty": false,
-            "value": 3
-          },
-          "value": 3
+          "condition": {"param": "Facility_hover", "empty": false, "value": 2},
+          "value": 0.3
+        },
+        "opacity": {
+          "condition": [
+            {"param": "Facility_hover", "empty": false, "value": 1},
+            {
+              "test": "State_selected == 'All' || datum.state == State_selected",
+              "value": 0.7
+            }
+          ],
+          "value": 0.08
         },
         "tooltip": [
+          {"field": "sa3_name", "type": "nominal", "title": "Area"},
+          {"field": "State Name", "type": "nominal", "title": "State"},
+          {"field": "remoteness", "type": "nominal", "title": "Remoteness"},
           {
-            "field": "AgeGroup",
-            "type": "nominal",
-            "title": "Age group"
-          },
-          {
-            "field": "Package Level",
-            "type": "nominal",
-            "title": "Package level"
-          },
-          {
-            "field": "Recipients",
+            "field": "Facilities in Area",
             "type": "quantitative",
             "format": ",",
-            "title": "Recipients"
-          },
-          {
-            "field": "AgeGroupTotal",
-            "type": "quantitative",
-            "format": ",",
-            "title": "Total recipients in age group"
-          },
-          {
-            "field": "PercentageWithinAgeGroup",
-            "type": "quantitative",
-            "format": ".1f",
-            "title": "Share of age group (%)"
+            "title": "Aged care facilities in this area"
           }
-        ]
+        ],
+        "stroke": {
+          "condition": {
+            "param": "Facility_hover",
+            "empty": false,
+            "value": "#183B4E"
+          },
+          "value": "#FFFFFF"
+        }
       }
     },
     {
-      "mark": {
-        "type": "text",
-        "fontSize": 12,
-        "fontWeight": 600
+      "data": {
+        "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_residential_facilities_2026_map.csv"
       },
-      "encoding": {
-        "x": {
-          "field": "Package Level",
-          "type": "ordinal",
-          "sort": [
-            "Level 1",
-            "Level 2",
-            "Level 3",
-            "Level 4"
+      "transform": [
+        {
+          "calculate": "datum.remoteness == 'Major Cities of Australia' ? 1 : 0",
+          "as": "Is City"
+        },
+        {
+          "calculate": "datum.remoteness == 'Remote Australia' || datum.remoteness == 'Very Remote Australia' ? 1 : 0",
+          "as": "Is Remote"
+        },
+        {
+          "aggregate": [
+            {"op": "count", "as": "Total"},
+            {"op": "sum", "field": "Is City", "as": "Cities"},
+            {"op": "sum", "field": "Is Remote", "as": "Remote"}
           ]
         },
-        "y": {
-          "field": "AgeGroup",
-          "type": "ordinal",
-          "sort": [
-            "100+",
-            "95–99",
-            "90–94",
-            "85–89",
-            "80–84",
-            "75–79",
-            "70–74",
-            "65–69",
-            "60–64",
-            "55–59",
-            "50–54",
-            "0–49"
-          ]
+        {
+          "calculate": "'Distribution of ' + format(datum.Total, ',') + ' residential aged care facilities, June 2026.'",
+          "as": "Subtitle"
         },
-        "text": {
-          "field": "Label",
-          "type": "nominal"
+        {
+          "calculate": "format(datum.Cities / datum.Total, '.0%') + ' are in major cities'",
+          "as": "Line 1"
         },
-        "color": {
-          "condition": {
-            "test": "datum.PercentageWithinAgeGroup >= 30",
-            "value": "#FFFFFF"
-          },
-          "value": "#142D4E"
+        {
+          "calculate": "'only ' + format(datum.Remote, ',') + ' (' + format(datum.Remote / datum.Total, '.1%') + ') are in remote areas'",
+          "as": "Line 2"
         }
-      }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "bottom",
+            "fontSize": 13,
+            "color": "#64748B",
+            "x": 0,
+            "y": -6
+          },
+          "encoding": {"text": {"field": "Subtitle"}}
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 13,
+            "fontWeight": "bold",
+            "color": "#183B4E",
+            "x": 0,
+            "y": 8
+          },
+          "encoding": {"text": {"field": "Line 1"}}
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "fontSize": 12,
+            "color": "#64748B",
+            "x": 0,
+            "y": 26
+          },
+          "encoding": {"text": {"field": "Line 2"}}
+        }
+      ]
+    },
+    {
+      "data": {"values": [{}]},
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "size": 28,
+            "color": "#0072B2",
+            "opacity": 0.75,
+            "x": 6,
+            "y": {"expr": "height - 10"}
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "fontSize": 12,
+            "color": "#183B4E",
+            "x": 16,
+            "y": {"expr": "height - 10"},
+            "text": "1 dot = 5 residential aged care facilities"
+          }
+        }
+      ]
     }
   ],
   "config": {
-    "view": {
-      "stroke": null
-    },
-    "font": "Inter, Helvetica, Arial, sans-serif",
-    "axis": {
-      "labelColor": "#142D4E",
-      "titleColor": "#142D4E"
-    },
+    "view": {"stroke": null},
+    "background": "#FFFFFF",
+    "text": {"color": "#183B4E"},
     "legend": {
-      "labelColor": "#142D4E",
-      "titleColor": "#142D4E"
+      "labelColor": "#183B4E",
+      "titleColor": "#183B4E",
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
     }
   }
 }
