@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- Vega, Vega-Lite and Vega-Embed, loaded once for every chart -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
@@ -377,7 +377,13 @@
 
   <!-- ============================== CHART LOADER ============================== -->
   <script>
-    /* Every chart's Vega-Lite specification is a readable JSON file in the js folder (Chart1.json to Chart11.json). */
+    /*
+      Every chart's Vega-Lite specification is a readable JSON file in the js folder (Chart1.json to Chart11.json).
+      The page first loads js/ChartN.json from this site. If that fails (for example when index.html is opened
+      by double-clicking instead of through the GitHub Pages link), it loads the same file from the GitHub repository.
+    */
+    const REPO_RAW = "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/main/";
+
     const CHARTS = Array.from({ length: 11 }, (_, i) => ({
       id: `chart-${String(i + 1).padStart(2, "0")}`,
       spec: `js/Chart${i + 1}.json`
@@ -385,15 +391,26 @@
 
     const EMBED_OPTIONS = { actions: false, renderer: "svg", tooltip: { theme: "story" } };
 
+    async function loadSpec(path) {
+      const sources = [path, REPO_RAW + path];
+      for (const url of sources) {
+        try {
+          const response = await fetch(url);
+          if (response.ok) return await response.json();
+        } catch (error) {
+          // Try the next source
+        }
+      }
+      throw new Error(`Could not load ${path}`);
+    }
+
     async function renderChart({ id, spec }) {
       const el = document.getElementById(id);
       if (!el) return;
       const figure = el.closest(".fig");
 
       try {
-        const response = await fetch(spec);
-        if (!response.ok) throw new Error(`Could not load ${spec} (${response.status})`);
-        const json = await response.json();
+        const json = await loadSpec(spec);
 
         // Charts that fill their column ("width": "container") fit their axes and labels inside it too.
         if (json.width === "container" && !json.autosize) {
@@ -405,7 +422,7 @@
 
         await vegaEmbed(el, json, EMBED_OPTIONS);
       } catch (error) {
-        console.error(error);
+        console.error(id, error);
         el.innerHTML = `<p class="chart-error">This chart could not be loaded. Check that <code>${spec}</code> is in the repository.</p>`;
       }
     }
