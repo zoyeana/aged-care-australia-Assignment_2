@@ -1,0 +1,6 @@
+﻿CareType,Q1AgeGroup,Q1Midpoint,MedianAgeGroup,MedianMidpoint,Q3AgeGroup,Q3Midpoint,ValidAgeRecords,ExcludedAgeRecords,FinancialYear,Source
+Permanent residential care,75–79,77.0,85–89,87.0,90–94,92.0,76628,786,2024–25,"AIHW GEN, CURF Admissions into aged care 2024–25"
+Respite residential care,75–79,77.0,85–89,87.0,90–94,92.0,95518,910,2024–25,"AIHW GEN, CURF Admissions into aged care 2024–25"
+Home care,75–79,77.0,80–84,82.0,85–89,87.0,105919,325,2024–25,"AIHW GEN, CURF Admissions into aged care 2024–25"
+Short-term restorative care,70–74,72.0,80–84,82.0,85–89,87.0,10468,6,2024–25,"AIHW GEN, CURF Admissions into aged care 2024–25"
+Transition care,75–79,77.0,80–84,82.0,85–89,87.0,22826,74,2024–25,"AIHW GEN, CURF Admissions into aged care 2024–25"
