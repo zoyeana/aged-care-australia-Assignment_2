@@ -1,0 +1,327 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/zoyeana/aged-care-australia-Assignment_2/refs/heads/main/data/australia_aged_care_spending_bar_line_2017_2025.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "residential_flexible_aud_billions": "number",
+        "home_support_aud_billions": "number",
+        "combined_spending_aud_billions": "number"
+      }
+    }
+  },
+  "transform": [
+    {"calculate": "replace(datum.financial_year, '-', '–')", "as": "Year"},
+    {
+      "window": [
+        {
+          "op": "lag",
+          "field": "combined_spending_aud_billions",
+          "as": "Previous Spending"
+        }
+      ],
+      "sort": [{"field": "financial_year"}]
+    },
+    {
+      "calculate": "isValid(datum['Previous Spending']) ? (datum.combined_spending_aud_billions / datum['Previous Spending'] - 1) * 100 : null",
+      "as": "Growth"
+    },
+    {
+      "calculate": "isValid(datum.Growth) ? format(datum.Growth, '+.2f') + '%' : 'Not applicable (first year)'",
+      "as": "Growth Label"
+    },
+    {
+      "calculate": "'$' + format(datum.combined_spending_aud_billions, '.1f') + 'b'",
+      "as": "Spending Label"
+    },
+    {"joinaggregate": [{"op": "max", "field": "Growth", "as": "Max Growth"}]},
+    {"calculate": "'Combined spending (A$ billion)'", "as": "Bar Series"},
+    {"calculate": "'Annual growth (%)'", "as": "Line Series"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": {
+        "title": "Financial year",
+        "labelAngle": 0,
+        "ticks": false,
+        "domainColor": "#C9D2CF",
+        "labelPadding": 8
+      }
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "Year_hover",
+          "select": {
+            "type": "point",
+            "fields": ["financial_year"],
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "width": {"band": 0.62},
+        "cornerRadiusTopLeft": 3,
+        "cornerRadiusTopRight": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "combined_spending_aud_billions",
+          "type": "quantitative",
+          "scale": {"domain": [0, 50], "zero": true},
+          "axis": {
+            "title": "Spending, A$ billion (2024–25 prices)",
+            "values": [0, 10, 20, 30, 40, 50],
+            "grid": true,
+            "gridColor": "#E5EAE8",
+            "domain": false,
+            "ticks": false
+          }
+        },
+        "color": {
+          "field": "Bar Series",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Combined spending (A$ billion)", "Annual growth (%)"],
+            "range": ["#377E88", "#D99A62"]
+          },
+          "legend": null
+        },
+        "opacity": {
+          "condition": {"param": "Year_hover", "value": 1},
+          "value": 0.45
+        },
+        "tooltip": [
+          {"field": "Year", "type": "nominal", "title": "Financial year"},
+          {
+            "field": "combined_spending_aud_billions",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Combined spending (A$ billion)"
+          },
+          {
+            "field": "residential_flexible_aud_billions",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Residential and flexible care (A$ billion)"
+          },
+          {
+            "field": "home_support_aud_billions",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Home care and support (A$ billion)"
+          },
+          {"field": "Growth Label", "type": "nominal", "title": "Annual growth"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "baseline": "top",
+        "dy": 6,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#FFFFFF",
+        "opacity": {"expr": "width < 600 ? 0 : 1"}
+      },
+      "encoding": {
+        "y": {
+          "field": "combined_spending_aud_billions",
+          "type": "quantitative",
+          "scale": {"domain": [0, 50]},
+          "axis": null
+        },
+        "text": {"field": "Spending Label"}
+      }
+    },
+    {
+      "layer": [
+        {
+          "transform": [{"filter": "isValid(datum.Growth)"}],
+          "mark": {"type": "line", "strokeWidth": 2.5, "interpolate": "linear"},
+          "encoding": {
+            "y": {
+              "field": "Growth",
+              "type": "quantitative",
+              "scale": {"domain": [0, 25]},
+              "axis": {
+                "title": "Annual growth (%)",
+                "orient": "right",
+                "values": [0, 5, 10, 15, 20, 25],
+                "labelExpr": "datum.value + '%'",
+                "grid": false,
+                "domain": false,
+                "ticks": false
+              }
+            },
+            "color": {"field": "Line Series", "type": "nominal"}
+          }
+        },
+        {
+          "transform": [{"filter": "isValid(datum.Growth)"}],
+          "mark": {
+            "type": "circle",
+            "stroke": "#FFFFFF",
+            "strokeWidth": 1.5,
+            "opacity": 1
+          },
+          "encoding": {
+            "y": {
+              "field": "Growth",
+              "type": "quantitative",
+              "scale": {"domain": [0, 25]}
+            },
+            "color": {"field": "Line Series", "type": "nominal"},
+            "size": {
+              "condition": [
+                {"param": "Year_hover", "empty": false, "value": 150},
+                {"test": "datum.Growth == datum['Max Growth']", "value": 110}
+              ],
+              "value": 70
+            },
+            "tooltip": [
+              {"field": "Year", "type": "nominal", "title": "Financial year"},
+              {
+                "field": "combined_spending_aud_billions",
+                "type": "quantitative",
+                "format": ".1f",
+                "title": "Combined spending (A$ billion)"
+              },
+              {
+                "field": "Growth Label",
+                "type": "nominal",
+                "title": "Annual growth"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [{"filter": "datum.Growth == datum['Max Growth']"}],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "bottom",
+            "dx": -12,
+            "dy": -8,
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#183B4E"
+          },
+          "encoding": {
+            "y": {
+              "field": "Growth",
+              "type": "quantitative",
+              "scale": {"domain": [0, 25]}
+            },
+            "text": {"value": "Fastest growth"}
+          }
+        },
+        {
+          "transform": [
+            {"filter": "datum.Growth == datum['Max Growth']"},
+            {
+              "calculate": "format(datum.Growth, '+.2f') + '% in ' + datum.Year",
+              "as": "Note"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "bottom",
+            "dx": -12,
+            "dy": 8,
+            "fontSize": 12,
+            "color": "#64748B"
+          },
+          "encoding": {
+            "y": {
+              "field": "Growth",
+              "type": "quantitative",
+              "scale": {"domain": [0, 25]}
+            },
+            "text": {"field": "Note"}
+          }
+        }
+      ]
+    },
+    {
+      "data": {"values": [{}]},
+      "layer": [
+        {
+          "mark": {
+            "type": "square",
+            "size": 110,
+            "color": "#377E88",
+            "opacity": 1
+          },
+          "encoding": {"x": {"value": 6}, "y": {"value": -20}}
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "fontSize": 12,
+            "text": "Combined spending (A$ billion)"
+          },
+          "encoding": {"x": {"value": 16}, "y": {"value": -20}}
+        },
+        {
+          "mark": {"type": "rule", "color": "#D99A62", "strokeWidth": 2.5},
+          "encoding": {
+            "x": {"value": 214},
+            "x2": {"value": 240},
+            "y": {"value": -20},
+            "y2": {"value": -20}
+          }
+        },
+        {
+          "mark": {
+            "type": "circle",
+            "size": 60,
+            "color": "#D99A62",
+            "opacity": 1,
+            "stroke": "#FFFFFF",
+            "strokeWidth": 1.5
+          },
+          "encoding": {"x": {"value": 227}, "y": {"value": -20}}
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "fontSize": 12,
+            "text": "Annual growth (%)"
+          },
+          "encoding": {"x": {"value": 248}, "y": {"value": -20}}
+        }
+      ]
+    }
+  ],
+  "resolve": {"scale": {"y": "independent"}},
+  "config": {
+    "view": {"stroke": null},
+    "background": "#FFFFFF",
+    "axis": {
+      "labelColor": "#183B4E",
+      "titleColor": "#183B4E",
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": "bold"
+    },
+    "legend": {"labelColor": "#183B4E", "labelFontSize": 12},
+    "text": {"color": "#183B4E"}
+  }
+}
