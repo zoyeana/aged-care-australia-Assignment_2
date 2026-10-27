@@ -1,0 +1,6 @@
+care_type,median_admission_age_group,age_group_midpoint_for_plot,admission_records,records_with_known_age,note
+Home care,80–84,82.0,106244,106244,"Age-band midpoint is a plotting proxy, not an exact median age"
+Permanent residential care,85–89,87.0,77414,77413,"Age-band midpoint is a plotting proxy, not an exact median age"
+Respite residential care,85–89,87.0,96428,96426,"Age-band midpoint is a plotting proxy, not an exact median age"
+Transition care,80–84,82.0,22900,22900,"Age-band midpoint is a plotting proxy, not an exact median age"
+Short-term restorative care,80–84,82.0,10474,10474,"Age-band midpoint is a plotting proxy, not an exact median age"
